@@ -52,7 +52,7 @@ class CollectionMenu extends Component {
     });
 
     return (
-        <div>
+        <div style={{float: 'left'}}>
             <h3>My Collections</h3>
             <form onSubmit={ this.handleAddNewCollection }>
                 <input type="text" name="newCollectionTitle" value={ this.state.newCollectionTitle } onChange={ this.handleChange } />

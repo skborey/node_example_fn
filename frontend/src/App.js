@@ -3,6 +3,7 @@ import { Component } from 'react';
 
 import Header from './components/header';
 import ColleciontMenu from './components/collectionMenu';
+import RestaurantList from './components/restaurantList';
 
 class App extends Component {
 
@@ -11,6 +12,7 @@ class App extends Component {
         <div>
           <Header />
           <ColleciontMenu />
+          <RestaurantList />
         </div>
     );
   }
