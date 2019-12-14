@@ -1,5 +1,6 @@
 const initialState = {
-    result: 0
+    result: 0,
+    collectionList: []
 }
 
 const cases = {
