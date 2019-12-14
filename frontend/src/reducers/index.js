@@ -1,15 +1,8 @@
 const initialState = {
-    currResult: 0,
     collectionList:[]
 }
 
 const cases = {
-    ADD_MORE: (state, action) => {
-        var newResult = state.currResult + action.additionalValue;
-        return Object.assign({}, state, {
-            currResult: newResult
-        })
-    },
 
     ADD_NEW_COLLECTION: (state, action) => {
         // ajax to backend to add new collection

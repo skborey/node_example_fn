@@ -1,10 +1,3 @@
-export const increment = (additionalValue) => {
-    return {
-        type: 'ADD_MORE',
-        additionalValue: additionalValue
-    }
-}
-
 export const addNewCollection = (title) => {
     return {
         type: 'ADD_NEW_COLLECTION',

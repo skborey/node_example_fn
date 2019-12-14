@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { increment, addNewCollection, deleteCollection } from './actions';
+import { addNewCollection, deleteCollection } from './actions';
 import Header from './components/header';
 
 class App extends Component {
@@ -12,10 +12,6 @@ class App extends Component {
     this.state = {
       newCollectionTitle: ''
     } // local state
-  }
-
-  handleOnClickIncrement = (e) => {
-    return this.props.increment(2);
   }
 
   handleChange = (e) => {
@@ -49,9 +45,6 @@ class App extends Component {
     return (
         <div>
           <Header />
-          <h1>Additional result: { this.props.currResult }</h1>
-          <button onClick={this.handleOnClickIncrement}>+</button>
-
           <div>
             <h3>My Collections</h3>
             <form onSubmit={ this.handleAddNewCollection }>
@@ -69,11 +62,9 @@ class App extends Component {
 
 export default connect(
   (state, props) => ({
-    currResult: state.currResult,
     collectionList: state.collectionList
   }),
   {
-    increment: increment,
     addNewCollection: addNewCollection,
     deleteCollection: deleteCollection
   }
