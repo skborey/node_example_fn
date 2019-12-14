@@ -1,42 +1,37 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Component } from 'react';
+import { connect } from 'react-redux';
+
 import { increment } from './actions';
 import Header from './components/header';
 
-function App() {
+class App extends Component {
 
-  const state = {};
-  // const dispatch = useDispatch();
-  // const currResult = useSelector(state => state.result);
+  constructor(props) {
+    super(props);
+    this.state = {} // local state
+  }
 
-  const collectionList = useSelector(state => state.collectionList).map((item, index) => {
+  handleOnClickIncrement = ( e ) => {
+    return this.props.increment(2);
+  }
+
+  render () {
     return (
-      <li key={index}>{item}</li>
-    )
-  });
-
-  return (
-      <div>
-        <Header />
-        {/* <h1>Additional result: { currResult }</h1>
-        <button onClick={() => dispatch(increment(2))}>+</button> */}
         <div>
-          <h3>My Collections</h3>
-          <input 
-            type='text' 
-            placeholder='Add new collection' 
-            onInput={ 
-              (evt) => {
-                state.newCollectionTilte = evt.target.value;
-                console.log(state);
-              }
-            }>
-          </input>
-          <button>Add</button>
-          {collectionList}
+          <Header />
+          <h1>Additional result: { this.props.currResult }</h1>
+          <button onClick={this.handleOnClickIncrement}>+</button>
         </div>
-      </div>
-  );
+    );
+  }
 }
 
-export default App;
+export default connect(
+  (state, props) => ({
+    currResult: state.currResult,
+  }),
+  {
+    increment: increment
+  }
+)(App);

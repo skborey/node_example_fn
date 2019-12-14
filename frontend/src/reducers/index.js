@@ -1,16 +1,12 @@
 const initialState = {
-    result: 0,
-    collectionList: []
+    currResult: 0
 }
 
 const cases = {
-
     ADD_MORE: (state, action) => {
-
-        var newResult = state.result + action.additionalValue;
-
+        var newResult = state.currResult + action.additionalValue;
         return Object.assign({}, state, {
-            result: newResult
+            currResult: newResult
         })
     },
 }
