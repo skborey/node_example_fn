@@ -11,3 +11,10 @@ export const deleteCollection = (id) => {
         id: id
     }
 }
+
+export const showRestaurantInCollection = (index) => {
+    return {
+        type: 'SHOW_RESTAURANT_IN_COLLECTION',
+        index: index
+    }
+}

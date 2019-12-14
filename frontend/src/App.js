@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addNewCollection, deleteCollection } from './actions';
+import { addNewCollection, deleteCollection, showRestaurantInCollection } from './actions';
 import Header from './components/header';
 
 class App extends Component {
@@ -27,17 +27,27 @@ class App extends Component {
     this.setState({ newCollectionTitle: ''});
   }
 
-  handleOnDeleteCollection = (id) => {
+  handleOnDeleteCollection = (id, collection) => {
+
+    if (!window.confirm(`"${collection.title}" will be deleted!`)) return;
+
     this.props.deleteCollection(id);
+  }
+
+  handleClickCollectionMenu = (e) => {
+
+    if (e.target.title === 'deleteCollection') return;
+
+    this.props.showRestaurantInCollection( e.target.id );
   }
 
   render () {
 
     let collectionMenu = this.props.collectionList.map((item, index) => {
       return (
-        <li key={index}>
+        <li key={index} id={index} onClick={this.handleClickCollectionMenu}>
           {item.title}
-          <span onClick={() => this.handleOnDeleteCollection(index)}> x </span>
+          <span title='deleteCollection' onClick={() => this.handleOnDeleteCollection(index, item)}> x </span>
         </li>
       )
     });
@@ -62,10 +72,12 @@ class App extends Component {
 
 export default connect(
   (state, props) => ({
-    collectionList: state.collectionList
+    collectionList: state.collectionList,
+    restaurantList: state.restaurantList
   }),
   {
     addNewCollection: addNewCollection,
-    deleteCollection: deleteCollection
+    deleteCollection: deleteCollection,
+    showRestaurantInCollection: showRestaurantInCollection
   }
 )(App);

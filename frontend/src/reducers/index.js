@@ -1,5 +1,6 @@
 const initialState = {
-    collectionList:[]
+    collectionList:[],
+    restaurantList:[]
 }
 
 const cases = {
@@ -9,7 +10,7 @@ const cases = {
         let newCollection = {
             _id: 'test id',
             title: action.title,
-            restaurants: [],
+            restaurants: [{id: 'restaurant-' + Math.floor(Math.random() * 100)}],
             collaborations: []
         }
 
@@ -26,6 +27,15 @@ const cases = {
 
         return Object.assign({}, state, {
             collectionList: newCollectionList
+        })
+    },
+
+    SHOW_RESTAURANT_IN_COLLECTION: (state, action) => {
+
+        let newRestaurantList = [...state.collectionList[action.index].restaurants]
+
+        return Object.assign({}, state, {
+            restaurantList: newRestaurantList
         })
     },
 }
