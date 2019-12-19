@@ -10,8 +10,18 @@
 
 .restaurant-list-cls .list-cls {
     min-height: 90px;
-    padding: 20px 20px 0 20px;
+    padding: 20px 20px 10px 20px;
     height: 100%;
+}
+
+.restaurant-list-cls .list-cls label {
+    font-size: smaller;
+    font-weight: 600;
+}
+
+.restaurant-list-cls .list-cls i {
+    display: block;
+    font-size: 11px;
 }
 
 .restaurant-list-cls .list-cls div {
@@ -25,7 +35,11 @@
     display: block;
     float: left;
     width: 50%;
-    position: absolute
+    position: relative;
+}
+
+.restaurant-list-cls .list-cls div:last-child {
+    width: 100%;
 }
 
 .restaurant-list-cls .list-cls select {
@@ -33,10 +47,6 @@
     display: block;
     position: relative;
     width: 100%;
-}
-
-.restaurant-list-cls i {
-    display: block;
 }
 
 .restaurant-list-cls .list-cls:nth-child(odd) {

@@ -1,3 +1,4 @@
+
 const initialState = {
     collectionList:[
         {id: '507f1f77bcf86cd799439001', title: 'My collection 1', restaurants:[{id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'}, {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'}], collaborations:[]},
@@ -8,15 +9,15 @@ const initialState = {
     ],
     restaurantList:[
         {id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'},
-        {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'},
-        {id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'},
-        {id: '507f1f77bcf86cd799439014', title: 'Restaurant 4', open_time: '13am - 7pm'},
-        {id: '507f1f77bcf86cd799439015', title: 'Restaurant 5', open_time: '14am - 6pm'},
-        {id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'},
-        {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'},
-        {id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'},
-        {id: '507f1f77bcf86cd799439014', title: 'Restaurant 4', open_time: '13am - 7pm'},
-        {id: '507f1f77bcf86cd799439015', title: 'Restaurant 5', open_time: '14am - 6pm'}
+        // {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'},
+        // {id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'},
+        // {id: '507f1f77bcf86cd799439014', title: 'Restaurant 4', open_time: '13am - 7pm'},
+        // {id: '507f1f77bcf86cd799439015', title: 'Restaurant 5', open_time: '14am - 6pm'},
+        // {id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'},
+        // {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'},
+        // {id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'},
+        // {id: '507f1f77bcf86cd799439014', title: 'Restaurant 4', open_time: '13am - 7pm'},
+        // {id: '507f1f77bcf86cd799439015', title: 'Restaurant 5', open_time: '14am - 6pm'}
     ]
 }
 
@@ -70,6 +71,13 @@ const cases = {
 
         return state;
     },
+
+    GET_RESTAURANT_LISTS: (state, action) => {
+        console.log(action.restaurants);
+        return Object.assign({}, state, {
+            restaurantList: action.restaurants
+        })
+    }
 
 }
 

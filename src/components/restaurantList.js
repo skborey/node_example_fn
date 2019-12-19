@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 
 import '../assets/restaurantlist.css';
-import { addRestaurantToCollection } from '../actions/restaurantListAction';
+import { addRestaurantToCollection, apiGetRestaurantLists } from '../actions/restaurantListAction';
 
 class RestaurantList extends Component {
 
@@ -14,6 +14,10 @@ class RestaurantList extends Component {
         selectedCollection: {},
         filterString: "11am - 9pm",
     }
+  }
+
+  componentDidMount() {
+    this.props.apiGetRestaurantLists(); // no filter
   }
 
   handleAddToCollectionDropdown = (e, restaurantIndex) => {
@@ -37,8 +41,7 @@ class RestaurantList extends Component {
       return (
           <div className="list-cls" key={index}>
               <div>
-                <label>{item.title}</label>
-                <i>Open: 10AM - 12PM</i>
+                <label>{((index+1)?(index+1): "")+". "+ item.name}</label>
               </div>
               <div>
                 <select value='+ Add to Collection' onChange={(e) => this.handleAddToCollectionDropdown(e, item.id)}>
@@ -46,6 +49,9 @@ class RestaurantList extends Component {
                     {collectionDropdown}
                     <option value='createNewCollection'>+ Create New Collection</option>
                 </select>
+              </div>
+              <div>
+                <i>Open: {item.hours}</i>
               </div>
           </div>
       )
@@ -65,6 +71,7 @@ export default connect(
     collectionList: state.collectionList
   }),
   {
-    addRestaurantToCollection: addRestaurantToCollection
+    addRestaurantToCollection: addRestaurantToCollection,
+    apiGetRestaurantLists: apiGetRestaurantLists
   }
 )(RestaurantList);
