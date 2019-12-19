@@ -9,6 +9,7 @@
 }
 
 .restaurant-list-cls .list-cls {
+    display: inline-block; /* make the side follow the element inside*/
     min-height: 90px;
     padding: 20px 20px 10px 20px;
     height: 100%;

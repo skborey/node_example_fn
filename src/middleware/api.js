@@ -9,7 +9,7 @@ const apiMiddleware = (store) => (next) => (action) => {
       next(action)
  
       // fetch data from an API that may take a while to respond
-      axios.get(API_ENDPOINT + "/restaurants-test")
+      axios.get(API_ENDPOINT + "/restaurants")
         .then(res => {
             // successfully received data, dispatch a new action with our data
             if (res.data.success) {
@@ -33,7 +33,25 @@ const apiMiddleware = (store) => (next) => (action) => {
 
       break;
  
-    // if we don't need to handle this action, we still need to pass it along
+    case 'API_REGISTER':
+      next(action)
+      axios.post(API_ENDPOINT + "/register", {
+        email: action.data.email,
+        password: action.data.password
+      })
+        .then(res => {
+          console.log(res);
+            if (res.data.success) {
+                store.dispatch({
+                    type: 'REGISTER',
+                    restaurants: res,
+                })
+            } else { console.log(res); store.dispatch({ type: 'REGISTER', restaurants: [], }) }
+        })
+        .catch(err => { console.log(err); store.dispatch({ type: 'REGISTER', restaurants: [], })
+        })
+      break;
+
     default: next(action)
   }
 }

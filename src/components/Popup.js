@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { register } from '../actions/userAction';
 import { resetPopup } from '../actions/popupAction';
 import '../assets/popup.css';
 
@@ -12,13 +13,27 @@ class Popup extends Component {
         this.state = {
             sessionEmail: null,
             showPage: null,
+            email: null,
+            password: null,
             // showPage: 'register',
         }
+    }
+
+    handleChange = (e) => {
+        console.log(e.target.name);
+
+        // do some validate
+        if (e.target.name === 'email') this.setState({email: e.target.value});
+        else if (e.target.name === 'password') this.setState({password: e.target.value});
     }
 
     handleButtonOnclick = (e) => {
         // test
         let action = e.target.dataset.action;
+        if (action==='register') {
+            this.props.register({email: this.state.email, password: this.state.password});
+        }
+
         let pages = ['register', 'login', 'addNewCollection', 'addNewCollaborator'];
         let nextPageIndex = pages.indexOf(action) + 2;
         if (nextPageIndex < pages.length) this.setState({'showPage': pages[nextPageIndex]});
@@ -38,18 +53,18 @@ class Popup extends Component {
                 <div>
                     <label>Register</label>
                     <div>
-                        <label>Email *: </label><input type="email" />
+                        <label>Email *: </label><input name="email" type="email" onChange={this.handleChange}/>
                     </div>
                     <div>
                         <label>Password *:  </label>
-                        <input type="password" />
+                        <input name="password" type="password" onChange={this.handleChange} />
                     </div>
                     <div>
-                        <label>Confirm Pasword *:  </label><input type="password" />
+                        <label>Confirm Pasword *:  </label><input name="confirm-password" type="password" onChange={this.handleChange}/>
                     </div>
                     <div>
                         <span className="message-cls">There is no User with this email</span>
-                        <button data-tag="register" onClick={this.handleButtonOnclick}>Register</button>
+                        <button data-action="register" onClick={this.handleButtonOnclick}>Register</button>
                     </div>
                 </div>
             ),
@@ -127,6 +142,7 @@ export default connect(
     popupPage: state.popupPage
   }),
   {
-      resetPopup: resetPopup
+      resetPopup: resetPopup,
+      register: register
   }
 )(Popup);

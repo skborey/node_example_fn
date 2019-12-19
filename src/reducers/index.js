@@ -42,6 +42,11 @@ const cases = {
         })
     },
 
+    'REGISTER': (state, action) => {
+        // handle cookie and sessions
+        return state;
+    },
+
     /**
      * Collection List
      */
