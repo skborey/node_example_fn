@@ -1,0 +1,51 @@
+.search-cls {
+    display: block;
+    position: fixed;
+    text-align: center;
+    top: 75px;
+    width: 100%;
+    padding: 20px 0 20px 0;
+    margin: 0;
+    background-color: #ffffff;
+    z-index: 200;
+}
+
+.search-cls input[name='search-ipt'] {
+    font-family: 'Poppins', sans-serif;
+    padding: 7px 15px;
+    outline-style: none;
+    width: 75%;
+    height: 20px;
+}
+
+.search-cls input[name='filter-day-ipt'] {
+    cursor: pointer;
+}
+
+.search-cls button {
+    position: relative;
+    border: none;
+    outline: none;
+    width: 79px;
+    height: 40px;
+}
+.search-cls button:active {
+    background-color: #eeeeee;
+}
+
+.search-cls div {
+    display: block;
+}
+.search-cls div:nth-child(2) {
+    margin-top: 10px;
+}
+
+.search-cls label {
+    cursor: pointer;
+    user-select: none;
+    margin-right: 10px;
+}
+
+.search-cls label:hover {
+    border-bottom: 1px solid #f5be1d;
+}

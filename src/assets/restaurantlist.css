@@ -1,0 +1,48 @@
+.restaurant-list-cls {
+    display: block;
+    position: relative;
+    margin: 0;
+    left: 35%;
+    width: 30%;
+    top: 190px;
+    /* min-width: 400px; */
+}
+
+.restaurant-list-cls .list-cls {
+    min-height: 90px;
+    padding: 20px 20px 0 20px;
+    height: 100%;
+}
+
+.restaurant-list-cls .list-cls div {
+    display: block;
+    float: right;
+    width: 50%;
+    position: relative;
+}
+
+.restaurant-list-cls .list-cls div:first-child {
+    display: block;
+    float: left;
+    width: 50%;
+    position: absolute
+}
+
+.restaurant-list-cls .list-cls select {
+    float: right;
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+.restaurant-list-cls i {
+    display: block;
+}
+
+.restaurant-list-cls .list-cls:nth-child(odd) {
+    background-color: #eeeeee;
+}
+.restaurant-list-cls .list-cls:nth-child(even) {
+    background-color: #ffffff;
+}
+

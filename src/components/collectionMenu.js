@@ -2,6 +2,8 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
+import '../assets/collectionmenu.css'
+
 import { addNewCollection, deleteCollection, showRestaurantInCollection } from '../actions/collectionMenuAction';
 
 class CollectionMenu extends Component {
@@ -46,21 +48,18 @@ class CollectionMenu extends Component {
       return (
         <li key={index} id={index} onClick={this.handleClickCollectionMenu}>
           {item.title}
-          <span title='deleteCollection' onClick={() => this.handleOnDeleteCollection(index, item)}> x </span>
+          <span title='Delete collection' onClick={() => this.handleOnDeleteCollection(index, item)}>x</span>
         </li>
       )
     });
 
     return (
-        <div style={{float: 'left'}}>
-            <h3>My Collections</h3>
-            <form onSubmit={ this.handleAddNewCollection }>
-                <input type="text" name="newCollectionTitle" value={ this.state.newCollectionTitle } onChange={ this.handleChange } />
-                <button type="submit">Add</button>
-            </form>
-            <ol>
-                {collectionMenu}
-            </ol>
+        <div className="collection-menu-cls" >
+            <h5>My Collections</h5>
+            <ul>
+              {collectionMenu}
+            </ul>
+            <button className="btn-addnew-cls">+ Add New Collection</button>
         </div>
     );
   }

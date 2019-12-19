@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+.app-cls {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    min-width: 900px;
+}
+
+h5 {
+    color: #9e9e9e;
+}
+
+select {
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+}
+
+button { 
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    border: 1px solid #424242;
+    outline-color: #424242;
+    outline-style: none;
+    background-color: #fafafa;
+    cursor: pointer;
+    /* box-shadow: 3px 3px 2px 1px #9e9e9e; */
+    box-shadow: 3px 3px 0px 0px #9e9e9e;
+    position: relative;
+    outline: none;
+    width: 79px;
+    height: 40px;
+}
+
+button:active {
+    /* box-shadow: 1px 1px 2px 1px #9e9e9e; */
+    box-shadow: 1px 1px 0px 0px #9e9e9e;
+}
+
+button:focus {
+    outline-style: none;
+}
+
+.btn-addnew-cls {
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: none;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+/* button add new */
+.btn-addnew-cls:focus {
+    outline-style: none;
+}
+
+.btn-addnew-cls:hover {
+    outline-style: none;
+    box-shadow: 1px 1px 2px 1px #9e9e9e;
+}
