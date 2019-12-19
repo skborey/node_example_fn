@@ -44,6 +44,10 @@
     cursor: pointer;
     user-select: none;
     margin-right: 10px;
+    color: #9e9e9e;
+}
+.search-cls label:hover {
+    color: #f5be1d;
 }
 
 .search-cls label:hover {
