@@ -1,5 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { showPopup } from '../actions/headerAction';
 
 import '../assets/header.css';
 
@@ -7,37 +10,24 @@ class Header extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            sessionEmail: null,
-        }
+        this.state = {}
     }
 
-    handleLogoutOnclick = () => {
-        this.setState({'sessionEmail': null});
-        console.log(this.state.sessionEmail);
-    }
-
-    handleLoginOnclick = () => {
-        this.setState({'sessionEmail': 'skborey@gmail.com'});
-        console.log(this.state.sessionEmail);
-    }
-
-    handleRegisterOnclick = () => {
-        this.setState({'sessionEmail': 'skborey@gmail.com'});
-        console.log(this.state.sessionEmail);
+    showPopup = (e) => {
+        this.props.showPopup(e.target.dataset.action);
     }
 
     render () {
         let sessionButton = (
-            (this.state.sessionEmail) ? ( 
-                <select value= { this.state.sessionEmail } onChange={ this.handleLogoutOnclick }>
-                    <option disabled hidden>{ this.state.sessionEmail }</option>
+            (this.props.sessions.email) ? ( 
+                <select value= { this.props.sessions.email } onChange={ this.showPopup }>
+                    <option disabled hidden>{ this.props.sessions.email }</option>
                     <option>Logout</option>
                 </select>
             ):(
                 <div>
-                    <button onClick={ this.handleLoginOnclick }>Login</button>
-                    <button onClick={ this.handleRegisterOnclick }>Register</button>
+                    <button data-action="login" onClick={ this.showPopup }>Login</button>
+                    <button data-action="register" onClick={ this.showPopup }>Register</button>
                 </div>
             ));
 
@@ -51,4 +41,14 @@ class Header extends Component {
     }
 }
   
-export default Header;
+// export default Header;
+
+export default connect(
+  (state, props) => ({
+    sessions: state.sessions,
+    trigger: state.popup
+  }),
+  {
+      showPopup: showPopup
+  }
+)(Header);

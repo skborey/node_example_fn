@@ -1,5 +1,9 @@
 
 const initialState = {
+    sessions: {
+        email: null
+    },
+    popupPage: null,
     collectionList:[
         {id: '507f1f77bcf86cd799439001', title: 'My collection 1', restaurants:[{id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'}, {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'}], collaborations:[]},
         {id: '507f1f77bcf86cd799439002', title: 'My collection 2', restaurants:[{id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'}, {id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'}], collaborations:[]},
@@ -22,6 +26,21 @@ const initialState = {
 }
 
 const cases = {
+
+    /**
+     * Header
+     */
+    'SHOW_POPUP': (state, action) => {
+        return Object.assign({}, state, {
+            popupPage: action.name,
+        })
+    },
+
+    'RESET_POPUP': (state, action) => {
+        return Object.assign({}, state, {
+            popupPage: null,
+        })
+    },
 
     /**
      * Collection List

@@ -1,5 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { resetPopup } from '../actions/popupAction';
 import '../assets/popup.css';
 
 class Popup extends Component {
@@ -8,8 +11,8 @@ class Popup extends Component {
         super(props);
         this.state = {
             sessionEmail: null,
-            // showPage: null,
-            showPage: 'register',
+            showPage: null,
+            // showPage: 'register',
         }
     }
 
@@ -24,12 +27,12 @@ class Popup extends Component {
 
     handleOnclickPopup = (e) => {
         if (e.target.className === 'popup-cls') {
-            this.setState({'showPage': null});
+            // this.setState({'showPage': null});
+            this.props.resetPopup();
         }
     }
 
     render () {
-
         let pages = {
             register: (
                 <div>
@@ -97,10 +100,10 @@ class Popup extends Component {
         };
 
         let popup = (
-            (this.state.showPage) ? (
+            (this.props.popupPage) ? (
                 <div className='popup-cls' onClick={this.handleOnclickPopup} >
                     <div className='block-cls'>
-                        {pages[this.state.showPage]}
+                        {pages[this.props.popupPage]}
                     </div>
                 </div>    
             ) : (
@@ -116,4 +119,14 @@ class Popup extends Component {
     }
 }
   
-export default Popup;
+// export default Popup;
+
+export default connect(
+  (state, props) => ({
+    sessions: state.sessions,
+    popupPage: state.popupPage
+  }),
+  {
+      resetPopup: resetPopup
+  }
+)(Popup);
