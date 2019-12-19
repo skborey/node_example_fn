@@ -4,7 +4,7 @@ import { Component } from 'react';
 import './assets/index.css';
 import Header from './components/Header';
 import Search from './components/Search';
-import CollectiontMenu from './components/CollectionMenu';
+import CollectionMenu from './components/CollectionMenu';
 import RestaurantList from './components/RestaurantList';
 import CollaboratorList from './components/CollaboratorList';
 import Popup from './components/Popup';
@@ -17,7 +17,7 @@ class App extends Component {
           <Header />
           <Search />
           <div>
-            <CollectiontMenu />
+            <CollectionMenu />
             <RestaurantList />
             <CollaboratorList />
           </div>
