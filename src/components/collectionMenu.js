@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import '../assets/collectionmenu.css'
 
-import { addNewCollection, deleteCollection, showRestaurantInCollection } from '../actions/collectionMenuAction';
+// import { addNewCollection, deleteCollection, showRestaurantInCollection } from '../actions/collectionMenuAction';
+import { addNewCollection, deleteCollection, showRestaurantInCollection } from '../actions/';
 
 class CollectionMenu extends Component {
 

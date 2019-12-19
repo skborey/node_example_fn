@@ -2,8 +2,10 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { register } from '../actions/userAction';
-import { resetPopup } from '../actions/popupAction';
+// import { register } from '../actions/userAction';
+// import { resetPopup } from '../actions/popupAction';
+import { register, resetPopup } from '../actions/';
+
 import '../assets/popup.css';
 
 class Popup extends Component {
