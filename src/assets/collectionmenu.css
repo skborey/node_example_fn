@@ -8,8 +8,15 @@
     z-index: 100;
     min-width: 175px;
     height: 100%;
-    padding: 0 20px;
+    padding: 0 10px;
     border-radius: 5px;
+}
+
+.collection-menu-cls h5 {
+    margin: 15px 0 0 0;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #bdbdbd;
 }
 
 .collection-menu-cls ul {
@@ -20,6 +27,7 @@
 }
 
 .collection-menu-cls ul li {
+    font-size: small;
     overflow: hidden;
     padding: 2px 10px ;
     border: 1px solid #eeeeee;
