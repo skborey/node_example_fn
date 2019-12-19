@@ -37,25 +37,26 @@ class RestaurantList extends Component {
         );
     });
 
-    let restaurantList = this.props.restaurantList.map((item, index) => {
-      return (
-          <div className="list-cls" key={index}>
-              <div>
-                <label>{((index+1)?(index+1): "")+". "+ item.name}</label>
-              </div>
-              <div>
-                <select value='+ Add to Collection' onChange={(e) => this.handleAddToCollectionDropdown(e, item.id)}>
-                    <option disabled hidden>+ Add to Collection</option>
-                    {collectionDropdown}
-                    <option value='createNewCollection'>+ Create New Collection</option>
-                </select>
-              </div>
-              <div>
-                <i>Open: {item.hours}</i>
-              </div>
-          </div>
-      )
-    });
+    let restaurantList = (this.props.restaurantList.length === 0) ? (<label>No restaurant found.</label>) :
+      this.props.restaurantList.map((item, index) => {
+        return (
+            <div className="list-cls" key={index}>
+                <div>
+                  <label>{((index+1)?(index+1): "")+". "+ item.name}</label>
+                </div>
+                <div>
+                  <select value='+ Add to Collection' onChange={(e) => this.handleAddToCollectionDropdown(e, item.id)}>
+                      <option disabled hidden>+ Add to Collection</option>
+                      {collectionDropdown}
+                      <option value='createNewCollection'>+ Create New Collection</option>
+                  </select>
+                </div>
+                <div>
+                  <i>Open: {item.hours}</i>
+                </div>
+            </div>
+        )
+      });
 
     return (
         <div className="restaurant-list-cls">

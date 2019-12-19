@@ -9,7 +9,7 @@ const apiMiddleware = (store) => (next) => (action) => {
       next(action)
  
       // fetch data from an API that may take a while to respond
-      axios.get(API_ENDPOINT + "/restaurants")
+      axios.get(API_ENDPOINT + "/restaurants-test")
         .then(res => {
             // successfully received data, dispatch a new action with our data
             if (res.data.success) {
