@@ -71,6 +71,21 @@ const cases = {
         }
     },
 
+    LOGOUT: (state, action) => {
+        if (action.error) {
+            console.log('Not handle yet');
+        } else {
+            console.log(action);
+            if (action.response.success) {
+                // TODO remove token from cookie
+                return Object.assign({}, state, { sessions: {} });
+            } else {
+                console.log('Not handle yet');
+            }
+        }
+        return state; // Becareful and remember reducer must return state, otherwise other componment maybe gone wrong
+    },
+
     /**
      * Collection List
      */

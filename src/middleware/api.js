@@ -73,6 +73,21 @@ const apiMiddleware = (store) => (next) => (action) => {
           error: err
         })});
       break;
+    case TYPES.API_LOGOUT:
+      next(action)
+      axios.get(API + "/logout", { 
+        headers: { Authorization: action.token }
+      }).then(res => { console.log(res); store.dispatch(
+        {
+          type: TYPES.LOGOUT,
+          response: res.data
+        })})
+      .catch(err => { console.log(err); store.dispatch(
+        {
+          type: TYPES.LOGOUT,
+          error: err
+        })});
+      break;
 
     default: next(action)
   }

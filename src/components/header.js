@@ -2,8 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-// import { showPopup } from '../actions/headerAction';
-import { showPopup } from '../actions/';
+import { showPopup, logout } from '../actions/';
 
 import '../assets/header.css';
 
@@ -18,10 +17,14 @@ class Header extends Component {
         this.props.showPopup(e.target.dataset.action);
     }
 
+    handleLogoutClick = (e) => {
+        this.props.logout(this.props.sessions.token);
+    }
+
     render () {
         let sessionButton = (
             (this.props.sessions.email) ? ( 
-                <select value= { this.props.sessions.email } onChange={ this.showPopup }>
+                <select value= { this.props.sessions.email } onChange={ this.handleLogoutClick }>
                     <option disabled hidden>{ this.props.sessions.email }</option>
                     <option>Logout</option>
                 </select>
@@ -41,8 +44,6 @@ class Header extends Component {
         );
     }
 }
-  
-// export default Header;
 
 export default connect(
   (state, props) => ({
@@ -50,6 +51,7 @@ export default connect(
     trigger: state.popup
   }),
   {
-      showPopup: showPopup
+      showPopup: showPopup,
+      logout: logout
   }
 )(Header);

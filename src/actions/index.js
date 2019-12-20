@@ -18,6 +18,14 @@ export const login = (data) => {
         password: data.password
     }
 }
+
+export const logout = (token) => {
+    return {
+        type: TYPES.API_LOGOUT,
+        token: token
+    }
+}
+
 /**
     Event trigger actions
  */
