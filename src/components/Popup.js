@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 // import { register } from '../actions/userAction';
 // import { resetPopup } from '../actions/popupAction';
-import { register, resetPopup } from '../actions/';
+import { resetPopup, register, login } from '../actions/';
 
 import '../assets/popup.css';
 
@@ -21,25 +21,32 @@ class Popup extends Component {
         }
     }
 
-    handleChange = (e) => {
-        console.log(e.target.name);
+    isEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        // do some validate
-        if (e.target.name === 'email') this.setState({email: e.target.value});
+        return (re.test(String(email).toLowerCase()))
+    }
+
+    handleChange = (e) => {
+        if (e.target.name === 'email' && this.isEmail(e.target.value)) this.setState({email: e.target.value});
         else if (e.target.name === 'password') this.setState({password: e.target.value});
     }
 
-    handleButtonOnclick = (e) => {
-        // test
-        let action = e.target.dataset.action;
-        if (action==='register') {
-            this.props.register({email: this.state.email, password: this.state.password});
-        }
+    handleButtonOnclick = (e) => { console.log(this.props.sessions);
 
-        let pages = ['register', 'login', 'addNewCollection', 'addNewCollaborator'];
-        let nextPageIndex = pages.indexOf(action) + 2;
-        if (nextPageIndex < pages.length) this.setState({'showPage': pages[nextPageIndex]});
-        else this.setState({'showPage': null});
+        let action = e.target.dataset.action;
+
+        switch(action) {
+            case 'register':
+                this.props.register({email: this.state.email, password: this.state.password});
+                break;
+            case 'login':
+                if (this.state.email && this.state.password) {
+                    this.props.login({email: this.state.email, password: this.state.password});
+                }
+                break;
+            default: console.log('default');
+        }
     }
 
     handleOnclickPopup = (e) => {
@@ -65,23 +72,22 @@ class Popup extends Component {
                         <label>Confirm Pasword *:  </label><input name="confirm-password" type="password" onChange={this.handleChange}/>
                     </div>
                     <div>
-                        <span className="message-cls">There is no User with this email</span>
+                        <span className="message-cls">{this.props.popupErrMsg}</span>
                         <button data-action="register" onClick={this.handleButtonOnclick}>Register</button>
                     </div>
                 </div>
             ),
             login: (
                 <div>
-                    
                     <label>Login</label><br />
                     <div>
-                        <label>Email : </label><input type="email" /><br />
+                        <label>Email : </label><input name="email" type="email" onChange={this.handleChange} /><br />
                     </div>
                     <div>
-                        <label>Password :  </label><input type="password" /><br />
+                        <label>Password :  </label><input name="password" type="password" onChange={this.handleChange} /><br />
                     </div>
                     <div>
-                        <span className="message-cls">There is no User with this email</span>
+                        <span className="message-cls">{this.props.popupErrMsg}</span>
                         <button data-action="login" onClick={this.handleButtonOnclick}>Login</button>
                     </div>
                 </div>
@@ -94,7 +100,7 @@ class Popup extends Component {
                         <input type="text" /><br />
                     </div>
                     <div>
-                        <span className="message-cls">There is no User with this email</span>
+                        <span className="message-cls">{this.props.popupErrMsg}</span>
                         <button data-action="addNewCollection" onClick={this.handleButtonOnclick}>Add</button>
                     </div>
                 </div>
@@ -109,7 +115,7 @@ class Popup extends Component {
                         <label>Search email * : </label><input type="email" /><br />
                     </div>
                     <div>
-                        <span className="message-cls">There is no User with this email</span>
+                        <span className="message-cls">{this.props.popupErrMsg}</span>
                         <button data-action="addNewCollaborator" onClick={this.handleButtonOnclick}>Add</button>
                     </div>
                 </div>
@@ -141,10 +147,12 @@ class Popup extends Component {
 export default connect(
   (state, props) => ({
     sessions: state.sessions,
-    popupPage: state.popupPage
+    popupPage: state.popupPage,
+    popupErrMsg: state.popupErrMsg,
   }),
   {
       resetPopup: resetPopup,
-      register: register
+      register: register,
+      login: login,
   }
 )(Popup);

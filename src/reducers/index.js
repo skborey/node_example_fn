@@ -4,6 +4,7 @@ const initialState = {
         token: null
     },
     popupPage: null,
+    popupErrMsg: null,
     collectionList:[
         {id: '507f1f77bcf86cd799439001', title: 'My collection 1', restaurants:[{id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'}, {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'}], collaborations:[]},
         {id: '507f1f77bcf86cd799439002', title: 'My collection 2', restaurants:[{id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'}, {id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'}], collaborations:[]},
@@ -30,21 +31,44 @@ const cases = {
     /**
      * Header
      */
-    SHOW_POPUP: (state, action) => {
-        return Object.assign({}, state, {
+    SHOW_POPUP: (state, action) => { return Object.assign({}, state,
+        {
             popupPage: action.name,
-        })
-    },
+        }
+    )},
 
-    RESET_POPUP: (state, action) => {
-        return Object.assign({}, state, {
-            popupPage: null,
-        })
-    },
+    RESET_POPUP: (state, action) => { return Object.assign({}, state,
+        {
+            popupPage: null, 
+        }
+    )},
 
-    REGISTER: (state, action) => {
-        // handle cookie and sessions
-        return state;
+    LOGIN: (state, action) => {
+        if (action.error) {
+            return Object.assign({}, state,
+            {
+                sessions: {},
+                popupErrMsg: "OOP! Something went wrong.",
+            });
+        } else {
+            console.log(action);
+            if (action.response.success) {
+                //store new session
+                return Object.assign({}, state, 
+                {
+                    sessions: { email: action.email, token: action.response.token },
+                    popupPage: null,
+                    popupErrMsg: null,
+                });
+            } else {
+                return Object.assign({}, state, 
+                {
+                    sessions: {},
+                    // popupPage: null,
+                    popupErrMsg: action.response.message,
+                });
+            }
+        }
     },
 
     /**

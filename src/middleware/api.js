@@ -1,6 +1,8 @@
 import config from '../config.json';
 import axios from 'axios';
 
+import TYPES from '../actions/types';
+
 let API = config.api.production;
 
 if (process.env.NODE_ENV === 'development') API = config.api.development;
@@ -35,7 +37,7 @@ const apiMiddleware = (store) => (next) => (action) => {
 
       break;
  
-    case 'API_REGISTER':
+    case TYPES.API_REGISTER:
       next(action)
       axios.post(API + "/register", {
         email: action.data.email,
@@ -52,6 +54,24 @@ const apiMiddleware = (store) => (next) => (action) => {
         })
         .catch(err => { console.log(err); store.dispatch({ type: 'REGISTER', restaurants: [], })
         })
+      break;
+
+    case TYPES.API_LOGIN:
+      next(action)
+      axios.post(API + "/login", { 
+        email: action.email,
+	      password: action.password,
+      }).then(res => { store.dispatch(
+        {
+          type: TYPES.LOGIN,
+          email: action.email,
+          response: res.data
+        })})
+      .catch(err => { console.log(err); store.dispatch(
+        {
+          type: TYPES.LOGIN,
+          error: err
+        })});
       break;
 
     default: next(action)

@@ -11,6 +11,13 @@ export const register = (data) => {
     }
 }
 
+export const login = (data) => {
+    return {
+        type: TYPES.API_LOGIN,
+        email: data.email,
+        password: data.password
+    }
+}
 /**
     Event trigger actions
  */

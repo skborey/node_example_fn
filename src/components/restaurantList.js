@@ -70,7 +70,8 @@ class RestaurantList extends Component {
 export default connect(
   (state, props) => ({
     restaurantList: state.restaurantList,
-    collectionList: state.collectionList
+    collectionList: state.collectionList,
+    sessions: state.sessions,
   }),
   {
     addRestaurantToCollection: addRestaurantToCollection,

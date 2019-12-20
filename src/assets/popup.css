@@ -46,8 +46,9 @@
     outline: none;
 }
 
-.message-cls {
+.popup-cls .message-cls {
     display: inline-block;
     position: relative;
     color: #f44336;
+    font-size: smaller;
 }

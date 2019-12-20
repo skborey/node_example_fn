@@ -5,6 +5,9 @@ const types = {
     
     // rest api
     API_REGISTER: 'API_REGISTER',
+    REGISTER: 'REGISTER',
+    API_LOGIN: 'API_LOGIN',
+    LOGIN: 'LOGIN',
     API_GET_RESTAURANT_LISTS: 'API_GET_RESTAURANT_LISTS',
 
     // eventrigger
