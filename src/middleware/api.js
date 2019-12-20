@@ -8,7 +8,37 @@ let API = config.api.production;
 if (process.env.NODE_ENV === 'development') API = config.api.development;
 
 const apiMiddleware = (store) => (next) => (action) => {
+
   switch(action.type) {
+
+    case T.API_INITIALIZE_SESSION:
+
+      next(action)
+      axios.get(API + "/user", { headers: { Authorization: action.token } })
+        .then(res => {
+            if (res.data.success) {
+                store.dispatch({
+                    type: T.INITIALIZE_SESSION,
+                    sessions: {
+                      email: res.data.email,
+                      token: action.token
+                    }
+                })
+            } else {
+                store.dispatch({
+                    type: T.INITIALIZE_SESSION,
+                    sessions: {},
+                })
+            }
+        })
+        .catch(err => {
+            store.dispatch({
+                type: T.INITIALIZE_SESSION,
+                sessions: {},
+            })
+        })
+
+      break;
 
     case T.API_GET_RESTAURANT_LISTS:
       next(action)

@@ -3,7 +3,6 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 
 import '../assets/restaurantlist.css';
-// import { addRestaurantToCollection, apiGetRestaurantLists } from '../actions/restaurantListAction';
 import { addRestaurantToCollection, apiGetRestaurantLists } from '../actions/';
 
 class RestaurantList extends Component {

@@ -4,6 +4,13 @@ import TYPES from './types';
     Authorization actions
  */
 
+export const initializeSession = (token) => {
+    return {
+        type: TYPES.API_INITIALIZE_SESSION,
+        token: token
+    }
+}
+
 export const register = (data) => {
     return {
         type: TYPES.API_REGISTER,

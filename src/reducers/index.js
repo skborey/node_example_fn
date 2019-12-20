@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 const initialState = {
     sessions: {
         email: null,
@@ -15,18 +17,27 @@ const initialState = {
     restaurantList:[
         // {id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'},
         // {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'},
-        // {id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'},
-        // {id: '507f1f77bcf86cd799439014', title: 'Restaurant 4', open_time: '13am - 7pm'},
-        // {id: '507f1f77bcf86cd799439015', title: 'Restaurant 5', open_time: '14am - 6pm'},
-        // {id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'},
-        // {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'},
-        // {id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'},
-        // {id: '507f1f77bcf86cd799439014', title: 'Restaurant 4', open_time: '13am - 7pm'},
-        // {id: '507f1f77bcf86cd799439015', title: 'Restaurant 5', open_time: '14am - 6pm'}
     ]
 }
 
 const cases = {
+
+    INITIALIZE_SESSION: (state, action) => {
+        if (action.sessions.email && action.sessions.token) {
+            return Object.assign({}, state,
+            {
+                sessions: action.sessions
+            });
+        } else {
+
+            Cookies.remove('token');
+
+            return Object.assign({}, state, 
+            {
+                sessions: {}
+            }); 
+        }
+    },
 
     /**
      * Header
@@ -53,7 +64,9 @@ const cases = {
         } else {
             console.log(action);
             if (action.response.success) {
-                //store new session
+                
+                Cookies.set('token', action.response.token, { expires: 1 });
+
                 return Object.assign({}, state, 
                 {
                     sessions: { email: action.email, token: action.response.token },
@@ -75,9 +88,10 @@ const cases = {
         if (action.error) {
             console.log('Not handle yet');
         } else {
-            console.log(action);
             if (action.response.success) {
-                // TODO remove token from cookie
+                
+                Cookies.remove('token');
+
                 return Object.assign({}, state, { sessions: {} });
             } else {
                 console.log('Not handle yet');
