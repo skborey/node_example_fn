@@ -12,6 +12,10 @@
     border-radius: 5px;
 }
 
+.collection-menu-cls button {
+    margin-top: 5px;
+}
+
 .collection-menu-cls h5 {
     margin: 15px 0 0 0;
     text-align: center;

@@ -1,7 +1,9 @@
 import config from '../config.json';
 import axios from 'axios';
 
-let API_ENDPOINT = config.api.endpoint;
+let API = config.api.production;
+
+if (process.env.NODE_ENV === 'development') API = config.api.development;
 
 const apiMiddleware = (store) => (next) => (action) => {
   switch(action.type) {
@@ -9,7 +11,7 @@ const apiMiddleware = (store) => (next) => (action) => {
       next(action)
  
       // fetch data from an API that may take a while to respond
-      axios.get(API_ENDPOINT + "/restaurants")
+      axios.get(API + "/restaurants")
         .then(res => {
             // successfully received data, dispatch a new action with our data
             if (res.data.success) {
@@ -35,7 +37,7 @@ const apiMiddleware = (store) => (next) => (action) => {
  
     case 'API_REGISTER':
       next(action)
-      axios.post(API_ENDPOINT + "/register", {
+      axios.post(API + "/register", {
         email: action.data.email,
         password: action.data.password
       })

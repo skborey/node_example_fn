@@ -1,6 +1,7 @@
 const initialState = {
     sessions: {
-        email: null
+        email: null,
+        token: null
     },
     popupPage: null,
     collectionList:[
