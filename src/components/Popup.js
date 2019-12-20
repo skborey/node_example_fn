@@ -61,6 +61,7 @@ class Popup extends Component {
 
     handleOnclickPopup = (e) => {
         if (e.target.className === 'popup-cls') {
+            this.setState({popupErrMsg: null});
             this.props.resetPopup();
         }
     }

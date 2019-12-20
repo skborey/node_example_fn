@@ -50,7 +50,8 @@ const cases = {
 
     RESET_POPUP: (state, action) => { return Object.assign({}, state,
         {
-            popupPage: null, 
+            popupPage: null,
+            popupErrMsg: null,
         }
     )},
 
