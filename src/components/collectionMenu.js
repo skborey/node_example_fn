@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import '../assets/collectionmenu.css'
 
-// import { addNewCollection, deleteCollection, showRestaurantInCollection } from '../actions/collectionMenuAction';
 import { addNewCollection, deleteCollection, showRestaurantInCollection } from '../actions/';
 
 class CollectionMenu extends Component {
@@ -13,7 +12,7 @@ class CollectionMenu extends Component {
     super(props);
     this.state = {
       newCollectionTitle: ''
-    } // local state
+    }
   }
 
   handleChange = (e) => {
@@ -55,6 +54,7 @@ class CollectionMenu extends Component {
     });
 
     return (
+      (this.props.sessions.email) ? (
         <div className="collection-menu-cls" >
             <h5>My Collections</h5>
             <ul>
@@ -62,6 +62,7 @@ class CollectionMenu extends Component {
             </ul>
             <button className="btn-addnew-cls">+ Add New Collection</button>
         </div>
+      ):(null)
     );
   }
 }
@@ -69,7 +70,8 @@ class CollectionMenu extends Component {
 export default connect(
   (state, props) => ({
     collectionList: state.collectionList,
-    restaurantList: state.restaurantList
+    restaurantList: state.restaurantList,
+    sessions: state.sessions
   }),
   {
     addNewCollection: addNewCollection,

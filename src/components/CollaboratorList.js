@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+import { connect } from 'react-redux';
 
 import '../assets/collaborator.css';
 
@@ -15,13 +16,20 @@ class CollaboratorList extends Component {
 
     render () {
         return (
-            <div className="collaborator-menu-cls">
-                <h5>Collaborators</h5>
-                <button className="btn-addnew-cls">+ Add New Collaborator</button>
-            </div>
-            
+            (this.props.sessions.email) ? (
+                <div className="collaborator-menu-cls">
+                    <h5>Collaborators</h5>
+                    <button className="btn-addnew-cls">+ Add New Collaborator</button>
+                </div>
+            ):(null)
         );
     }
 }
-  
-export default CollaboratorList;
+
+export default connect(
+  (state, props) => ({
+    sessions: state.sessions
+  }),
+  {
+  }
+)(CollaboratorList);

@@ -30,19 +30,19 @@ const cases = {
     /**
      * Header
      */
-    'SHOW_POPUP': (state, action) => {
+    SHOW_POPUP: (state, action) => {
         return Object.assign({}, state, {
             popupPage: action.name,
         })
     },
 
-    'RESET_POPUP': (state, action) => {
+    RESET_POPUP: (state, action) => {
         return Object.assign({}, state, {
             popupPage: null,
         })
     },
 
-    'REGISTER': (state, action) => {
+    REGISTER: (state, action) => {
         // handle cookie and sessions
         return state;
     },
