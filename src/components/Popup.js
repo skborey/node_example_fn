@@ -2,8 +2,6 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-// import { register } from '../actions/userAction';
-// import { resetPopup } from '../actions/popupAction';
 import { resetPopup, register, login } from '../actions/';
 
 import '../assets/popup.css';
@@ -15,10 +13,11 @@ class Popup extends Component {
         this.state = {
             sessionEmail: null,
             showPage: null,
-            email: null,
-            password: null,
-            // showPage: 'register',
+            popupErrMsg: null,
         }
+
+        this.emailInput = React.createRef();
+        this.passwordInput = React.createRef();
     }
 
     isEmail(email) {
@@ -41,9 +40,20 @@ class Popup extends Component {
                 this.props.register({email: this.state.email, password: this.state.password});
                 break;
             case 'login':
-                if (this.state.email && this.state.password) {
-                    this.props.login({email: this.state.email, password: this.state.password});
+                let email = this.emailInput.current.value;
+                let password = this.passwordInput.current.value;
+                let isEmail = this.isEmail(email);
+
+                this.emailInput.current.style.borderColor = isEmail ? '': '#ff5722';
+                this.passwordInput.current.style.borderColor = password ? '' : '#ff5722';
+
+                if (isEmail && password) {
+                    this.setState({popupErrMsg: null});
+                    this.props.login({email: email, password: password});
+                } else {
+                    this.setState({popupErrMsg: "Invalid email or password."});
                 }
+
                 break;
             default: console.log('default');
         }
@@ -51,29 +61,51 @@ class Popup extends Component {
 
     handleOnclickPopup = (e) => {
         if (e.target.className === 'popup-cls') {
-            // this.setState({'showPage': null});
             this.props.resetPopup();
         }
     }
 
     render () {
+
+        let errMsg = this.state.popupErrMsg ?
+                        this.state.popupErrMsg :
+                            this.props.popupErrMsg ?
+                                this.props.popupErrMsg : null;
+
         let pages = {
             register: (
                 <div>
                     <label>Register</label>
                     <div>
-                        <label>Email *: </label><input name="email" type="email" onChange={this.handleChange}/>
+                        <label>Email *: </label>
+                        <input
+                            name="email"
+                            type="email"
+                            onChange={this.handleChange}
+                        />
                     </div>
                     <div>
                         <label>Password *:  </label>
-                        <input name="password" type="password" onChange={this.handleChange} />
+                        <input
+                            name="password"
+                            type="password"
+                            onChange={this.handleChange}
+                        />
                     </div>
                     <div>
-                        <label>Confirm Pasword *:  </label><input name="confirm-password" type="password" onChange={this.handleChange}/>
+                        <label>Confirm Pasword *:  </label>
+                        <input 
+                            value={this.state.password} 
+                            name="confirm-password" 
+                            type="password" 
+                            onChange={this.handleChange}/>
                     </div>
                     <div>
-                        <span className="message-cls">{this.props.popupErrMsg}</span>
-                        <button data-action="register" onClick={this.handleButtonOnclick}>Register</button>
+                        <span className="message-cls">{errMsg}</span>
+                        <button 
+                            data-action="register"
+                            onClick={this.handleButtonOnclick}
+                        >Register</button>
                     </div>
                 </div>
             ),
@@ -81,14 +113,27 @@ class Popup extends Component {
                 <div>
                     <label>Login</label><br />
                     <div>
-                        <label>Email : </label><input name="email" type="email" onChange={this.handleChange} /><br />
+                        <label>Email : </label>
+                        <input 
+                            name="email" 
+                            type="email"
+                            ref={this.emailInput}
+                        />
                     </div>
                     <div>
-                        <label>Password :  </label><input name="password" type="password" onChange={this.handleChange} /><br />
+                        <label>Password :  </label>
+                        <input
+                            name="password"
+                            type="password" 
+                            ref={this.passwordInput}
+                        />
                     </div>
                     <div>
-                        <span className="message-cls">{this.props.popupErrMsg}</span>
-                        <button data-action="login" onClick={this.handleButtonOnclick}>Login</button>
+                        <span className="message-cls">{errMsg}</span>
+                        <button
+                            data-action="login"
+                            onClick={this.handleButtonOnclick}
+                        >Login</button>
                     </div>
                 </div>
             ),
@@ -100,23 +145,31 @@ class Popup extends Component {
                         <input type="text" /><br />
                     </div>
                     <div>
-                        <span className="message-cls">{this.props.popupErrMsg}</span>
-                        <button data-action="addNewCollection" onClick={this.handleButtonOnclick}>Add</button>
+                        <span className="message-cls">{errMsg}</span>
+                        <button
+                            data-action="addNewCollection"
+                            onClick={this.handleButtonOnclick}
+                        >Add</button>
                     </div>
                 </div>
             ),
             addNewCollaborator: (
                 <div>
-                    <label>New Collaboration</label><br />
+                    <label>New Collaboration</label>
                     <div>
-                        <label>Name * : </label><input type="email" /><br />
+                        <label>Name * : </label>
+                        <input type="email" />
                     </div>
                     <div>
-                        <label>Search email * : </label><input type="email" /><br />
+                        <label>Search email * : </label>
+                        <input type="email" />
                     </div>
                     <div>
-                        <span className="message-cls">{this.props.popupErrMsg}</span>
-                        <button data-action="addNewCollaborator" onClick={this.handleButtonOnclick}>Add</button>
+                        <span className="message-cls">{errMsg}</span>
+                        <button
+                            data-action="addNewCollaborator"
+                            onClick={this.handleButtonOnclick}
+                        >Add</button>
                     </div>
                 </div>
             )
@@ -128,7 +181,7 @@ class Popup extends Component {
                     <div className='block-cls'>
                         {pages[this.props.popupPage]}
                     </div>
-                </div>    
+                </div>
             ) : (
                 null
             )
@@ -141,8 +194,6 @@ class Popup extends Component {
         );
     }
 }
-  
-// export default Popup;
 
 export default connect(
   (state, props) => ({

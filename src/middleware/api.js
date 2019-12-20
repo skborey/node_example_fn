@@ -1,7 +1,7 @@
 import config from '../config.json';
 import axios from 'axios';
 
-import TYPES from '../actions/types';
+import T from '../actions/types';
 
 let API = config.api.production;
 
@@ -9,13 +9,11 @@ if (process.env.NODE_ENV === 'development') API = config.api.development;
 
 const apiMiddleware = (store) => (next) => (action) => {
   switch(action.type) {
-    case 'API_GET_RESTAURANT_LISTS':
+
+    case T.API_GET_RESTAURANT_LISTS:
       next(action)
- 
-      // fetch data from an API that may take a while to respond
       axios.get(API + "/restaurants")
         .then(res => {
-            // successfully received data, dispatch a new action with our data
             if (res.data.success) {
                 store.dispatch({
                     type: 'GET_RESTAURANT_LISTS',
@@ -37,7 +35,8 @@ const apiMiddleware = (store) => (next) => (action) => {
 
       break;
  
-    case TYPES.API_REGISTER:
+    case T.API_REGISTER:
+
       next(action)
       axios.post(API + "/register", {
         email: action.data.email,
@@ -56,35 +55,38 @@ const apiMiddleware = (store) => (next) => (action) => {
         })
       break;
 
-    case TYPES.API_LOGIN:
+    case T.API_LOGIN:
+
       next(action)
       axios.post(API + "/login", { 
         email: action.email,
 	      password: action.password,
       }).then(res => { store.dispatch(
         {
-          type: TYPES.LOGIN,
+          type: T.LOGIN,
           email: action.email,
           response: res.data
         })})
       .catch(err => { console.log(err); store.dispatch(
         {
-          type: TYPES.LOGIN,
+          type: T.LOGIN,
           error: err
         })});
       break;
-    case TYPES.API_LOGOUT:
+
+    case T.API_LOGOUT:
+
       next(action)
       axios.get(API + "/logout", { 
         headers: { Authorization: action.token }
       }).then(res => { console.log(res); store.dispatch(
         {
-          type: TYPES.LOGOUT,
+          type: T.LOGOUT,
           response: res.data
         })})
       .catch(err => { console.log(err); store.dispatch(
         {
-          type: TYPES.LOGOUT,
+          type: T.LOGOUT,
           error: err
         })});
       break;
