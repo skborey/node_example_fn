@@ -55,6 +55,28 @@ const cases = {
         }
     )},
 
+    REGISTER: (state, action) => {
+        if (action.error) { console.error(action);
+            return Object.assign({}, state,
+            {
+                popupErrMsg: "OOP! Something went wrong.",
+            });
+        } else {
+            if (action.message) {
+                return Object.assign({}, state,
+                {
+                    popupErrMsg: action.message,
+                });
+            } else {
+
+                return Object.assign({}, state,
+                {
+                    popupErrMsg: "Account is created successfully.",
+                });
+            }
+        }
+    },
+
     LOGIN: (state, action) => {
         if (action.error) {
             return Object.assign({}, state,

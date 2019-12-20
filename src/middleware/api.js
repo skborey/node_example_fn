@@ -73,15 +73,13 @@ const apiMiddleware = (store) => (next) => (action) => {
         password: action.data.password
       })
         .then(res => {
-          console.log(res);
             if (res.data.success) {
                 store.dispatch({
-                    type: 'REGISTER',
-                    restaurants: res,
+                    type: T.REGISTER,
                 })
-            } else { console.log(res); store.dispatch({ type: 'REGISTER', restaurants: [], }) }
+            } else { console.log(res); store.dispatch({ type: T.REGISTER, message: res.data.message }); }
         })
-        .catch(err => { console.log(err); store.dispatch({ type: 'REGISTER', restaurants: [], })
+        .catch(err => { console.log(err); store.dispatch({ type: T.REGISTER, error: err.message });
         })
       break;
 

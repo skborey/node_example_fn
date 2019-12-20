@@ -18,7 +18,12 @@ class Popup extends Component {
 
         this.emailInput = React.createRef();
         this.passwordInput = React.createRef();
+
+        this.emailReg$ = React.createRef();
+        this.passwordReg$ = React.createRef();
+        this.confirmReg$ = React.createRef();
     }
+
 
     isEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -26,23 +31,54 @@ class Popup extends Component {
         return (re.test(String(email).toLowerCase()))
     }
 
-    handleChange = (e) => {
-        if (e.target.name === 'email' && this.isEmail(e.target.value)) this.setState({email: e.target.value});
-        else if (e.target.name === 'password') this.setState({password: e.target.value});
+    isPassword(password) {
+
+        return (password && password.trim().length >= 6);
     }
 
-    handleButtonOnclick = (e) => { console.log(this.props.sessions);
+
+
+    handleChange = (e) => {
+    }
+
+    handleButtonOnclick = (e) => {
 
         let action = e.target.dataset.action;
+        let email = '';
+        let password = '';
+        let isEmail = '';
 
         switch(action) {
+
             case 'register':
-                this.props.register({email: this.state.email, password: this.state.password});
+                email = this.emailReg$.current.value;
+                password = this.passwordReg$.current.value;
+                let confirm = this.confirmReg$.current.value;
+                
+                isEmail = this.isEmail(email);
+                let isPassword = this.isPassword(password);
+
+                this.emailReg$.current.style.borderColor = isEmail ? '': '#ff5722';
+                this.passwordReg$.current.style.borderColor = isPassword ? '' : '#ff5722';
+
+                if (isEmail && isPassword) {
+                    if (password === confirm) {
+                        this.setState({popupErrMsg: null});
+                        this.props.register({email: email, password: password});
+                    } else {
+                        this.confirmReg$.current.style.borderColor = '#ff5722';
+                        this.setState({popupErrMsg: "Password is not matched."});
+                    }
+                } else {
+                    this.setState({popupErrMsg: "Invalid data."});
+                }
+
                 break;
+
             case 'login':
-                let email = this.emailInput.current.value;
-                let password = this.passwordInput.current.value;
-                let isEmail = this.isEmail(email);
+                email = this.emailInput.current.value;
+                password = this.passwordInput.current.value;
+                isEmail = this.isEmail(email);
 
                 this.emailInput.current.style.borderColor = isEmail ? '': '#ff5722';
                 this.passwordInput.current.style.borderColor = password ? '' : '#ff5722';
@@ -74,6 +110,7 @@ class Popup extends Component {
                                 this.props.popupErrMsg : null;
 
         let pages = {
+
             register: (
                 <div>
                     <label>Register</label>
@@ -82,24 +119,24 @@ class Popup extends Component {
                         <input
                             name="email"
                             type="email"
-                            onChange={this.handleChange}
+                            ref={this.emailReg$}
                         />
                     </div>
                     <div>
-                        <label>Password *:  </label>
+                        <label>Password(>=6chars) *:  </label>
                         <input
                             name="password"
                             type="password"
-                            onChange={this.handleChange}
+                            ref={this.passwordReg$}
                         />
                     </div>
                     <div>
                         <label>Confirm Pasword *:  </label>
                         <input 
-                            value={this.state.password} 
                             name="confirm-password" 
                             type="password" 
-                            onChange={this.handleChange}/>
+                            ref={this.confirmReg$}
+                        />
                     </div>
                     <div>
                         <span className="message-cls">{errMsg}</span>
@@ -110,6 +147,7 @@ class Popup extends Component {
                     </div>
                 </div>
             ),
+
             login: (
                 <div>
                     <label>Login</label><br />
@@ -138,6 +176,7 @@ class Popup extends Component {
                     </div>
                 </div>
             ),
+
             addNewCollection: (
                 <div>
                     <label>New Collection</label><br />
@@ -154,6 +193,7 @@ class Popup extends Component {
                     </div>
                 </div>
             ),
+
             addNewCollaborator: (
                 <div>
                     <label>New Collaboration</label>
