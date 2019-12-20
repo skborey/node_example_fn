@@ -7,12 +7,14 @@ const initialState = {
     },
     popupPage: null,
     popupErrMsg: null,
+    showCollectionId: '5df553709a2f48293c99afdf',
     collectionList:{
         "collections": {
             "5df553709a2f48293c99afdf": {
                 "restaurants": [],
-                "collaborations": [
-                    "5df6614022eb0971498f3b6c"
+                "collaborators": [
+                    "5df6614022eb0971498f3b6c",
+                    "5df6614022eb0971498f3b6d"
                 ],
                 "_id": "5df553709a2f48293c99afdf",
                 "name": "The weekend favorite",
@@ -20,18 +22,23 @@ const initialState = {
             },
             "5df665c522eb0971498f3d6a": {
                 "restaurants": [],
-                "collaborations": [],
+                "collaborators": [],
                 "_id": "5df665c522eb0971498f3d6a",
                 "name": "New collections new ------4",
                 "owner_email": "skborey@gmail.com"
             }
         },
         "restaurants": {},
-        "collaborations": {
+        "collaborators": {
             "5df6614022eb0971498f3b6c": {
                 "_id": "5df6614022eb0971498f3b6c",
                 "name": "Borey",
                 "email": "skborey@mailsac.com"
+            },
+            "5df6614022eb0971498f3b6d": {
+                "_id": "5df6614022eb0971498f3b6d",
+                "name": "Borey2",
+                "email": "skborey2@mailsac.com"
             }
         }
     },
