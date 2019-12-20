@@ -44,14 +44,18 @@ class CollectionMenu extends Component {
 
   render () {
 
-    let collectionMenu = this.props.collectionList.map((item, index) => {
+    let collections = this.props.collectionList.collections;
+    let collectionMenu = Object.keys(collections).map(function(id) {
       return (
-        <li key={index} id={index} onClick={this.handleClickCollectionMenu}>
-          {item.title}
-          <span title='Delete collection' onClick={() => this.handleOnDeleteCollection(index, item)}>x</span>
+        <li key={id} id={id} >
+           {collections[id].name}
+           <span 
+             title='Delete collection' 
+             onClick={() => this.handleOnDeleteCollection(id)}
+           >x</span>
         </li>
       )
-    });
+    })
 
     return (
       (this.props.sessions.email) ? (

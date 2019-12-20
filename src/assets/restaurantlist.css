@@ -11,18 +11,29 @@
 .restaurant-list-cls .list-cls {
     display: inline-block; /* make the side follow the element inside*/
     min-height: 90px;
-    padding: 20px 20px 10px 20px;
+    /* padding: 20px 20px 10px 20px; */
     height: 100%;
+    width: 100%;
+}
+
+.restaurant-list-cls .list-cls select {
+    float: right;
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 2px;
 }
 
 .restaurant-list-cls .list-cls label {
     font-size: smaller;
     font-weight: 600;
+    padding: 5px;
 }
 
 .restaurant-list-cls .list-cls i {
     display: block;
     font-size: 11px;
+    padding: 5px;
 }
 
 .restaurant-list-cls .list-cls div {
@@ -40,13 +51,6 @@
 }
 
 .restaurant-list-cls .list-cls div:last-child {
-    width: 100%;
-}
-
-.restaurant-list-cls .list-cls select {
-    float: right;
-    display: block;
-    position: relative;
     width: 100%;
 }
 

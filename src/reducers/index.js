@@ -7,16 +7,85 @@ const initialState = {
     },
     popupPage: null,
     popupErrMsg: null,
-    collectionList:[
-        {id: '507f1f77bcf86cd799439001', title: 'My collection 1', restaurants:[{id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'}, {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'}], collaborations:[]},
-        {id: '507f1f77bcf86cd799439002', title: 'My collection 2', restaurants:[{id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'}, {id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'}], collaborations:[]},
-        {id: '507f1f77bcf86cd799439003', title: 'My collection 3', restaurants:[{id: '507f1f77bcf86cd799439013', title: 'Restaurant 3', open_time: '12am - 8pm'}, {id: '507f1f77bcf86cd799439014', title: 'Restaurant 4', open_time: '13am - 7pm'},], collaborations:[]},
-        {id: '507f1f77bcf86cd799439004', title: 'My collection 4', restaurants:[{id: '507f1f77bcf86cd799439014', title: 'Restaurant 4', open_time: '13am - 7pm'}, {id: '507f1f77bcf86cd799439015', title: 'Restaurant 5', open_time: '14am - 6pm'}], collaborations:[]},
-        {id: '507f1f77bcf86cd799439005', title: 'My collection 5', restaurants:[{id: '507f1f77bcf86cd799439015', title: 'Restaurant 5', open_time: '14am - 6pm'}, {id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'}], collaborations:[]},
-    ],
+    collectionList:{
+        "collections": {
+            "5df553709a2f48293c99afdf": {
+                "restaurants": [],
+                "collaborations": [
+                    "5df6614022eb0971498f3b6c"
+                ],
+                "_id": "5df553709a2f48293c99afdf",
+                "name": "The weekend favorite",
+                "owner_email": "skborey@gmail.com"
+            },
+            "5df665c522eb0971498f3d6a": {
+                "restaurants": [],
+                "collaborations": [],
+                "_id": "5df665c522eb0971498f3d6a",
+                "name": "New collections new ------4",
+                "owner_email": "skborey@gmail.com"
+            }
+        },
+        "restaurants": {},
+        "collaborations": {
+            "5df6614022eb0971498f3b6c": {
+                "_id": "5df6614022eb0971498f3b6c",
+                "name": "Borey",
+                "email": "skborey@mailsac.com"
+            }
+        }
+    },
     restaurantList:[
-        // {id: '507f1f77bcf86cd799439011', title: 'Restaurant 1', open_time: '10am - 10pm'},
-        // {id: '507f1f77bcf86cd799439012', title: 'Restaurant 2', open_time: '11am - 9pm'},
+        {
+            "_id": "5df0f57efe9773b24e74bf40",
+            "name": "Osakaya Restaurant",
+            "hours": "Mon-Thu, Sun 11:30 am - 9 pm  / Fri-Sat 11:30 am - 9:30 pm"
+        },
+        {
+            "_id": "5df0f57efe9773b24e74bf41",
+            "name": "The Stinking Rose",
+            "hours": "Mon-Thu, Sun 11:30 am - 10 pm  / Fri-Sat 11:30 am - 11 pm"
+        },
+        {
+            "_id": "5df0f57efe9773b24e74bf42",
+            "name": "Kushi Tsuru",
+            "hours": "Mon-Sun 11:30 am - 9 pm"
+        },
+        {
+            "_id": "5df0f57efe9773b24e74bf43",
+            "name": "McCormick & Kuleto's",
+            "hours": "Mon-Thu, Sun 11:30 am - 10 pm  / Fri-Sat 11:30 am - 11 pm"
+        },
+        {
+            "_id": "5df0f57efe9773b24e74bf44",
+            "name": "Mifune Restaurant",
+            "hours": "Mon-Sun 11 am - 10 pm"
+        },
+        {
+            "_id": "5df0f57efe9773b24e74bf45",
+            "name": "New Delhi Indian Restaurant",
+            "hours": "Mon-Sat 11:30 am - 10 pm  / Sun 5:30 pm - 10 pm"
+        },
+        {
+            "_id": "5df0f57efe9773b24e74bf46",
+            "name": "The Cheesecake Factory",
+            "hours": "Mon-Thu 11 am - 11 pm  / Fri-Sat 11 am - 12:30 am  / Sun 10 am - 11 pm"
+        },
+        {
+            "_id": "5df0f57efe9773b24e74bf47",
+            "name": "Iroha Restaurant",
+            "hours": "Mon-Thu, Sun 11:30 am - 9:30 pm  / Fri-Sat 11:30 am - 10 pm"
+        },
+        {
+            "_id": "5df0f57efe9773b24e74bf48",
+            "name": "Canton Seafood & Dim Sum Restaurant",
+            "hours": "Mon-Fri 10:30 am - 9:30 pm  / Sat-Sun 10 am - 9:30 pm"
+        },
+        {
+            "_id": "5df0f57efe9773b24e74bf49",
+            "name": "Alioto's Restaurant",
+            "hours": "Mon-Sun 11 am - 11 pm"
+        }
     ]
 }
 
