@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { resetPopup, register, login } from '../actions/';
+import { addNewCollection, resetPopup, register, login } from '../actions/';
 
 import '../assets/popup.css';
 
@@ -22,6 +22,8 @@ class Popup extends Component {
         this.emailReg$ = React.createRef();
         this.passwordReg$ = React.createRef();
         this.confirmReg$ = React.createRef();
+
+        this.newCollectionTitle$ = React.createRef();
     }
 
 
@@ -35,8 +37,6 @@ class Popup extends Component {
 
         return (password && password.trim().length >= 6);
     }
-
-
 
     handleChange = (e) => {
     }
@@ -91,6 +91,22 @@ class Popup extends Component {
                 }
 
                 break;
+            case 'addNewCollection':
+
+                let name = this.newCollectionTitle$.current.value;
+                name = name ? name.trim() : null;
+
+                this.newCollectionTitle$.current.style.borderColor = name ? '': '#ff5722';
+
+                if (name) {
+                    this.setState({popupErrMsg: null});
+                    this.props.addNewCollection(name, this.props.sessions.token);
+                } else {
+                    this.setState({popupErrMsg: "Invalid title."});
+                }
+
+                break;
+
             default: console.log('default');
         }
     }
@@ -182,7 +198,10 @@ class Popup extends Component {
                     <label>New Collection</label><br />
                     <div>
                         <label>Title * : </label>
-                        <input type="text" /><br />
+                        <input
+                            type="text"
+                            ref={this.newCollectionTitle$}
+                        /><br />
                     </div>
                     <div>
                         <span className="message-cls">{errMsg}</span>
@@ -243,8 +262,9 @@ export default connect(
     popupErrMsg: state.popupErrMsg,
   }),
   {
-      resetPopup: resetPopup,
-      register: register,
-      login: login,
+    addNewCollection: addNewCollection,
+    resetPopup: resetPopup,
+    register: register,
+    login: login,
   }
 )(Popup);

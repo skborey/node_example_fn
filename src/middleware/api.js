@@ -41,6 +41,7 @@ const apiMiddleware = (store) => (next) => (action) => {
       break;
 
     case T.API_GET_RESTAURANT_LISTS:
+
       next(action)
       axios.get(API + "/restaurants")
         .then(res => {
@@ -62,9 +63,35 @@ const apiMiddleware = (store) => (next) => (action) => {
                 restaurants: [],
             })
         })
-
       break;
- 
+
+    case T.API_ADD_NEW_COLLECTION:
+
+      next(action)
+      axios.put(API + "/collections", { name: action.name },{ headers: { Authorization: action.token } })
+        .then(res => { console.log(res)
+            if (res.data.success) {
+                store.dispatch({
+                    type: 'ADD_NEW_COLLECTION',
+                    success: res.data.success,
+                    collection: res.data.data[0],
+                })
+            } else {
+                store.dispatch({
+                    type: 'ADD_NEW_COLLECTION',
+                    success: res.data.success,
+                    collection: {}
+                })
+            }
+        })
+        .catch(err => {  console.log(err)
+            store.dispatch({
+                type: 'ADD_NEW_COLLECTION',
+                error: err
+            })
+        })
+      break;
+
     case T.API_REGISTER:
 
       next(action)

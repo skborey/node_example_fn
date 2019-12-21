@@ -47,10 +47,11 @@ export const showPopup = (name = {}) => {
 /**
     Collection actions
  */
- export const addNewCollection = (title) => {
+ export const addNewCollection = (name, token = '') => {
     return {
-        type: TYPES.ADD_NEW_COLLECTION,
-        title: title
+        type: TYPES.API_ADD_NEW_COLLECTION,
+        name: name,
+        token: token
     }
 }
 

@@ -204,17 +204,32 @@ const cases = {
      */
 
     ADD_NEW_COLLECTION: (state, action) => {
-        // ajax to backend to add new collection
-        let newCollection = {
-            _id: 'test id',
-            title: action.title,
-            restaurants: [{id: 'restaurant-' + Math.floor(Math.random() * 100)}],
-            collaborations: []
-        }
+        if (action.error) { console.log(action.error);
+            return Object.assign({}, state,
+            {
+                popupErrMsg: "OOP! Something went wrong.",
+            });
+        } else if (action.success) { console.log(action.collection)
+            // Add new object to existing one: https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns/
 
-        return Object.assign({}, state, {
-            collectionList: [...state.collectionList, newCollection]
-        })
+            return {
+                ...state,
+                collectionList: {
+                    ...state.collectionList,
+                    collections: {
+                        ...state.collectionList.collections,
+                        [action.collection._id]: action.collection
+                    }
+                },
+                // reset back popup
+                popupPage: null,
+                popupErrMsg: null,
+            }
+        } else {
+            return Object.assign({}, state, {
+                popupErrMsg: action.error,
+            })
+        }
     },
 
     DELETE_COLLECTION: (state, action) => {
