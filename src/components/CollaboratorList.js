@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import '../assets/collaborator.css';
 
+import { showPopup } from '../actions';
+
 class CollaboratorList extends Component {
 
     constructor(props) {
@@ -51,7 +53,10 @@ class CollaboratorList extends Component {
                     <ul>
                         {collaboratorMenu}
                     </ul>
-                    <button className="btn-addnew-cls">+ Add New Collaborator</button>
+                    <button 
+                        className="btn-addnew-cls"
+                        onClick={ () => this.props.showPopup('addNewCollaborator')}
+                    >+ Add New Collaborator</button>
                 </div>
             ):(null)
         );
@@ -65,5 +70,6 @@ export default connect(
     showCollectionId: state.showCollectionId,
   }),
   {
+      showPopup: showPopup,
   }
 )(CollaboratorList);
