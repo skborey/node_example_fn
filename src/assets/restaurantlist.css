@@ -73,7 +73,7 @@
     content: 'x';
     position: relative;
     width: px;
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(158, 158, 158, 0.5);;
     border-radius: 50%;
     text-align: center;
     width: 25px!important;
@@ -83,6 +83,10 @@
     right: -10px;
     color: #ffffff;
     float: right!important;
+}
+
+.restaurant-list-cls .list-cls .remove-cls:hover {
+    background-color: rgba(255, 0, 0, 0.5);
 }
 
 .restaurant-list-cls .list-cls:hover .remove-cls {
