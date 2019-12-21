@@ -92,6 +92,36 @@ const apiMiddleware = (store) => (next) => (action) => {
         })
       break;
 
+    case T.API_DELETE_COLLECTION:
+
+      next(action)
+      axios.delete(API + "/collections/" + action.id, { headers: { Authorization: action.token } } )
+        .then(res => { console.log('delete collection: ', res)
+            if (res.data.success) {
+                store.dispatch({
+                    type: T.DELETE_COLLECTION,
+                    success: res.data.success,
+                    message: res.data.message,
+                    id: action.id,
+                })
+            } else {
+                store.dispatch({
+                    type: T.DELETE_COLLECTION,
+                    success: res.data.success,
+                    message: res.data.message,
+                    id: action.id,
+                })
+            }
+        })
+        .catch(err => {  console.log('delete collection: ', err)
+            store.dispatch({
+                type: T.DELETE_COLLECTION,
+                error: err
+            })
+        })
+      break;
+
+
     case T.API_REGISTER:
 
       next(action)

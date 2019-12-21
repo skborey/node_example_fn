@@ -50,15 +50,16 @@ export const showPopup = (name = {}) => {
  export const addNewCollection = (name, token = '') => {
     return {
         type: TYPES.API_ADD_NEW_COLLECTION,
+        token: token,
         name: name,
-        token: token
     }
 }
 
-export const deleteCollection = (id) => {
+export const deleteCollection = (id, token = '') => {
     return {
-        type: TYPES.DELETE_COLLECTION,
-        id: id
+        type: TYPES.API_DELETE_COLLECTION,
+        token: token,
+        id: id,
     }
 }
 

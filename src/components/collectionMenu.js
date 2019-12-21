@@ -19,21 +19,22 @@ class CollectionMenu extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleOnDeleteCollection = (id, collection) => {
+  deleteCollection = (id, name) => {
 
-    if (!window.confirm(`"${collection.title}" will be deleted!`)) return;
-
-    this.props.deleteCollection(id);
+    if (!window.confirm(`"${name}" will be deleted!`)) return;
+    this.props.deleteCollection(id, this.props.sessions.token);
   }
 
   handleClickCollectionMenu = (e) => {
+    //will comeback soon
+    // if (e.target.title === 'deleteCollection') return;
 
-    if (e.target.title === 'deleteCollection') return;
-
-    this.props.showRestaurantInCollection( e.target.id );
+    // this.props.showRestaurantInCollection( e.target.id );
   }
 
   render () {
+
+    let YESTTHIS = this; // in map cannot know `this`
 
     let collections = this.props.collectionList.collections;
     let collectionMenu = Object.keys(collections).map(function(id) {
@@ -42,11 +43,11 @@ class CollectionMenu extends Component {
            {collections[id].name}
            <span 
              title='Delete collection' 
-             onClick={() => this.handleOnDeleteCollection(id)}
+             onClick={() => YESTTHIS.deleteCollection(id, collections[id].name)}
            >x</span>
         </li>
       )
-    })
+    });
 
     return (
       (this.props.sessions.email) ? (

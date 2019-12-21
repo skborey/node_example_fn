@@ -233,14 +233,33 @@ const cases = {
     },
 
     DELETE_COLLECTION: (state, action) => {
-        // ajax to backend to delete collection
-        
-        let newCollectionList = [...state.collectionList]; //in state use immutable state
-        newCollectionList.splice(action.id, 1);
+        if (action.error) { console.log(action.error);
+            return Object.assign({}, state,
+            {
+                popupErrMsg: "OOP! Something went wrong.",
+            });
+        } else if (action.success) { console.log(action, state)
+            // remove and item from object
+            const collections = state.collectionList.collections
+            const newCollections =  Object.keys(collections)
+                                .filter(key => key !== action.id)
+                                .reduce((result, current) => {
+                                    result[current] = collections[current];
+                                    return result;
+                                }, {});
 
-        return Object.assign({}, state, {
-            collectionList: newCollectionList
-        })
+            // collection is removed, all current restorant should be remvoe as well
+            const newShowCollectionId = (state.showCollectionId === action.id) ? null : state.showCollectionId;
+
+            return {
+                ...state,
+                collectionList: {
+                    ...state.collectionList,
+                    collections: newCollections
+                },
+                showCollectionId: newShowCollectionId,
+            }
+        }
     },
 
     SHOW_RESTAURANT_IN_COLLECTION: (state, action) => {
