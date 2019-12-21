@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 
 import '../assets/restaurantlist.css';
-import { addRestaurantToCollection, apiGetRestaurantLists } from '../actions/';
+import { showPopup, addRestaurantToCollection, apiGetRestaurantLists } from '../actions/';
 
 class RestaurantList extends Component {
 
@@ -20,16 +20,17 @@ class RestaurantList extends Component {
     this.props.apiGetRestaurantLists(); // no filter
   }
 
-  handleAddToCollectionDropdown = (e, restaurantIndex) => {
+  addToCollection = (e, restaurantIndex) => {
 
-      // find which collection is selected
-      let collectionIndex = e.target.value;
+      let collectionId = e.target.value;
 
-      this.props.addRestaurantToCollection( restaurantIndex, collectionIndex );
-  }
+      if (collectionId === 'addNewCollection') {
+        this.props.showPopup('addNewCollection');
+      } else {
+        console.log('addd to collection');
+      }
 
-  handleOnclick = (e) => {
-    console.log(e, e.target, e.target.innerText)
+      // this.props.addRestaurantToCollection( restaurantIndex, collectionIndex );
   }
 
   render () {
@@ -60,12 +61,12 @@ class RestaurantList extends Component {
                 </div>
                 <div>
                   <select 
-                      value='+ Add to Collection' 
-                      onChange = {(e) => this.handleAddToCollectionDropdown(e, item.id)}
+                      value='+ Add to Collection'
+                      onChange = {(e) => this.addToCollection(e, item.id)}
                     >
                       <option disabled hidden>+ Add to Collection</option>
                       {collectionDropdown}
-                      <option value='createNewCollection'>+ Create New Collection</option>
+                      <option value='addNewCollection'>+ Create New Collection</option>
                   </select>
                 </div>
                 <div>
@@ -92,6 +93,7 @@ export default connect(
     sessions: state.sessions,
   }),
   {
+    showPopup: showPopup,
     addRestaurantToCollection: addRestaurantToCollection,
     apiGetRestaurantLists: apiGetRestaurantLists
   }
