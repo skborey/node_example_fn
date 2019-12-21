@@ -24,6 +24,9 @@ class Popup extends Component {
         this.confirmReg$ = React.createRef();
 
         this.newCollectionTitle$ = React.createRef();
+
+        this.nameCollaborator$ = React.createRef();
+        this.emailCollaborator$ = React.createRef();
     }
 
 
@@ -45,6 +48,7 @@ class Popup extends Component {
 
         let action = e.target.dataset.action;
         let email = '';
+        let name = '';
         let password = '';
         let isEmail = '';
 
@@ -94,7 +98,7 @@ class Popup extends Component {
 
             case 'addNewCollection':
 
-                let name = this.newCollectionTitle$.current.value;
+                name = this.newCollectionTitle$.current.value;
                 name = name ? name.trim() : null;
 
                 this.newCollectionTitle$.current.style.borderColor = name ? '': '#ff5722';
@@ -109,6 +113,21 @@ class Popup extends Component {
                 break;
 
             case 'addNewCollaborator':
+                
+                name = this.nameCollaborator$.current.value;
+                name = name ? name.trim() : null;
+                email = this.emailCollaborator$.current.value;
+                isEmail = this.isEmail(email);
+
+                this.nameCollaborator$.current.style.borderColor = name ? '': '#ff5722';
+                this.emailCollaborator$.current.style.borderColor = isEmail ? '' : '#ff5722';
+
+                if (name && isEmail) {
+                    this.setState({popupErrMsg: null});
+                } else {
+                    this.setState({popupErrMsg: "Invalid data."});
+                }
+
                 break;
 
             default: console.log('default');
@@ -219,7 +238,7 @@ class Popup extends Component {
 
             addNewCollaborator: (
                 <div>
-                    <label>New Collaboration</label>
+                    <label>New Collaborator</label>
                     <div>
                         <label>Name * : </label>
                         <input
