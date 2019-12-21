@@ -28,6 +28,10 @@ class RestaurantList extends Component {
       this.props.addRestaurantToCollection( restaurantIndex, collectionIndex );
   }
 
+  handleOnclick = (e) => {
+    console.log(e, e.target, e.target.innerText)
+  }
+
   render () {
 
     let collections = this.props.collectionList.collections;
@@ -41,7 +45,16 @@ class RestaurantList extends Component {
     let restaurantList = (this.props.restaurantList.length === 0) ? (<label>No restaurant found.</label>) :
       this.props.restaurantList.map((item, index) => {
         return (
-            <div className="list-cls" key={index}>
+            <div 
+              key={index}
+              className="list-cls"
+              onClick={this.handleOnclick}
+              >
+                {this.props.sessions.email ?
+                (<div 
+                  title="Remove from collection"
+                  className="remove-cls"
+                >x</div>) : ''}
                 <div>
                   <label>{(index+1) +'. '+ item.name}</label>
                 </div>

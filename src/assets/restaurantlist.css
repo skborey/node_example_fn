@@ -1,9 +1,11 @@
 .restaurant-list-cls {
     display: block;
     position: relative;
-    margin: 0;
-    left: 35%;
-    width: 30%;
+    margin: 15px 0 0 0;
+    /* left: 35%;
+    width: 30%; */
+    left: 31%;
+    width: 37.5%;
     top: 190px;
     /* min-width: 400px; */
 }
@@ -14,14 +16,16 @@
     /* padding: 20px 20px 10px 20px; */
     height: 100%;
     width: 100%;
+    margin: 3px;
 }
 
 .restaurant-list-cls .list-cls select {
-    float: right;
+    /* float: right; */
     display: block;
     position: relative;
     width: 100%;
     padding: 2px;
+    margin-left: 10px;
 }
 
 .restaurant-list-cls .list-cls label {
@@ -38,14 +42,12 @@
 
 .restaurant-list-cls .list-cls div {
     display: block;
-    float: right;
     width: 50%;
     position: relative;
 }
 
-.restaurant-list-cls .list-cls div:first-child {
+.restaurant-list-cls .list-cls div:nth-child(2) {
     display: block;
-    float: left;
     width: 50%;
     position: relative;
 }
@@ -60,4 +62,52 @@
 .restaurant-list-cls .list-cls:nth-child(even) {
     background-color: #ffffff;
 }
+
+.restaurant-list-cls .list-cls:hover {
+    outline-style: none;
+    box-shadow: 0px 3px 5px 2px rgba(158, 158, 158, 0.5);
+    cursor: pointer;
+}
+
+.restaurant-list-cls .list-cls .remove-cls {
+    content: 'x';
+    position: relative;
+    width: px;
+    background-color: rgba(255, 0, 0, 0.5);
+    border-radius: 50%;
+    text-align: center;
+    width: 25px!important;
+    height: 25px;
+    display: none;
+    top: -13px;
+    right: -10px;
+    color: #ffffff;
+    float: right!important;
+}
+
+.restaurant-list-cls .list-cls:hover .remove-cls {
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* .restaurant-list-cls .list-cls::before {
+    content: 'x';
+    position: relative;
+    width: px;
+    background-color: rgba(255, 0, 0, 0.5);
+    border-radius: 50%;
+    text-align: center;
+    width: 25px!important;
+    height: 25px;
+    display: none;
+    top: -13px;
+    right: -10px;
+    color: #ffffff;
+    float: right!important;
+}
+
+.restaurant-list-cls .list-cls:hover::before {
+    display: inline-block;
+    cursor: pointer;
+} */
 

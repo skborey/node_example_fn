@@ -7,7 +7,7 @@ const initialState = {
     },
     popupPage: null,
     popupErrMsg: null,
-    showCollectionId: '5df553709a2f48293c99afdf',
+    showCollectionId: '5df553709a2f48293c99afdf', // will reset when search click search button
     collectionList:{
         "collections": {
             "5df553709a2f48293c99afdf": {
