@@ -47,7 +47,7 @@ class CollaboratorList extends Component {
                 )}) : null;
 
         return (
-            (this.props.sessions.email) ? (
+            (this.props.sessions.email && this.props.showCollectionId) ? (
                 <div className="collaborator-menu-cls">
                     <h5>Collaborators</h5>
                     <ul>

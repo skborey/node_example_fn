@@ -91,6 +91,7 @@ class Popup extends Component {
                 }
 
                 break;
+
             case 'addNewCollection':
 
                 let name = this.newCollectionTitle$.current.value;
@@ -105,6 +106,9 @@ class Popup extends Component {
                     this.setState({popupErrMsg: "Invalid title."});
                 }
 
+                break;
+
+            case 'addNewCollaborator':
                 break;
 
             default: console.log('default');
@@ -218,11 +222,17 @@ class Popup extends Component {
                     <label>New Collaboration</label>
                     <div>
                         <label>Name * : </label>
-                        <input type="email" />
+                        <input
+                            type="name"
+                            ref={this.nameCollaborator$}
+                        />
                     </div>
                     <div>
-                        <label>Search email * : </label>
-                        <input type="email" />
+                        <label>Email * : </label>
+                        <input 
+                            type="email" 
+                            ref={this.emailCollaborator$}
+                        />
                     </div>
                     <div>
                         <span className="message-cls">{errMsg}</span>
