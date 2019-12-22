@@ -23,7 +23,7 @@ class Header extends Component {
     }
 
     reload = (e) => {
-        window.location.reload();;
+        window.location.reload();
     }
 
     render () {

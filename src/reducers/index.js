@@ -155,7 +155,8 @@ const cases = {
                 
                 Cookies.remove('token');
 
-                return { ...state, sessions: {} }
+                // return { ...state, sessions: {} }
+                return initialState;
         } else if (action.error) {
             console.log('@TODO Not handle yet with is error.');
         } else {
