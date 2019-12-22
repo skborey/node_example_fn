@@ -16,18 +16,26 @@ const apiMiddleware = (store) => (next) => (action) => {
       next(action)
       axios.get(API + "/user", { headers: { Authorization: action.token } })
         .then(res => {
-
           let response = res.data;
-          let payload = (response.success) ? {
+          let payload = {}
+          if (response.success) {
+            payload = {
               type: T.INITIALIZE_SESSION,
               sessions: {
                 email: response.email,
                 token: action.token
               }
-            } : {
+            }
+
+            // get the user assets for initial initializ the
+            
+
+          } else {
+            payload = {
               type: T.INITIALIZE_SESSION,
               sessions: {},
-            };
+            }
+          }
 
           store.dispatch(payload);
         })
