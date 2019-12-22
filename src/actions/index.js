@@ -54,7 +54,7 @@ export const resetPopup = () => {
  */
  export const addNewCollection = (name, token='') => {
     return {
-        type: TYPES.ADD_NEW_COLLECTION,
+        type: TYPES.API_ADD_NEW_COLLECTION,
         token: token,
         name: name,
     }

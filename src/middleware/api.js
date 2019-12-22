@@ -68,16 +68,16 @@ const apiMiddleware = (store) => (next) => (action) => {
 
       next(action)
       axios.put(API + "/collections", { name: action.name },{ headers: { Authorization: action.token } })
-        .then(res => { console.log(res)
+        .then(res => {
             if (res.data.success) {
                 store.dispatch({
-                    type: 'ADD_NEW_COLLECTION',
+                    type: T.ADD_NEW_COLLECTION,
                     success: res.data.success,
-                    collection: res.data.data[0],
+                    collection: res.data.collection,
                 })
             } else {
                 store.dispatch({
-                    type: 'ADD_NEW_COLLECTION',
+                    type: T.ADD_NEW_COLLECTION,
                     success: res.data.success,
                     collection: {}
                 })
@@ -85,7 +85,7 @@ const apiMiddleware = (store) => (next) => (action) => {
         })
         .catch(err => {  console.log(err)
             store.dispatch({
-                type: 'ADD_NEW_COLLECTION',
+                type: T.ADD_NEW_COLLECTION,
                 error: err
             })
         })

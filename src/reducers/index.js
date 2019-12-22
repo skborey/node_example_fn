@@ -10,70 +10,70 @@ const initialState = {
     toast: null, // reserve for general information or success message
     selectedCollectionId: null,
     collections: {
-        "c1": {
-            "_id": "c1",
-            "name": "The favorite weekend",
-            "ownerEmail": "skborey@gmail.com"
-        },
-        "c2": {
-            "_id": "c2",
-            "name": "New collection 1",
-            "ownerEmail": "skborey1@gmail.com"
-        },
-        "c3": {
-            "_id": "c3",
-            "name": "New collection 2",
-            "ownerEmail": "skborey@gmail.com"
-        }
+        // "c1": {
+        //     "_id": "c1",
+        //     "name": "The favorite weekend",
+        //     "ownerEmail": "skborey@gmail.com"
+        // },
+        // "c2": {
+        //     "_id": "c2",
+        //     "name": "New collection 1",
+        //     "ownerEmail": "skborey1@gmail.com"
+        // },
+        // "c3": {
+        //     "_id": "c3",
+        //     "name": "New collection 2",
+        //     "ownerEmail": "skborey@gmail.com"
+        // }
     },
     restaurants: {
-        "r1": {
-            "_id": "r1",
-            "name": "Restuarant 1",
-            "open": "7 AM - 9 AM"
-        },
-        "r2": {
-            "_id": "r2",
-            "name": "Restuarant 2",
-            "open": "8 AM - 10 AM"
-        },
-        "r3": {
-            "_id": "r3",
-            "name": "Restuarant 3",
-            "open": "9 AM - 11 AM"
-        }
+        // "r1": {
+        //     "_id": "r1",
+        //     "name": "Restuarant 1",
+        //     "open": "7 AM - 9 AM"
+        // },
+        // "r2": {
+        //     "_id": "r2",
+        //     "name": "Restuarant 2",
+        //     "open": "8 AM - 10 AM"
+        // },
+        // "r3": {
+        //     "_id": "r3",
+        //     "name": "Restuarant 3",
+        //     "open": "9 AM - 11 AM"
+        // }
     },
     collaborators: {
-        "cb1": {
-            "_id": "cb1",
-            "name": "Borey 1",
-            "collection_id": "c1",
-            "email": "skborey1@gmail.com"
-        },
-        "cb2": {
-            "_id": "cb2",
-            "name": "Borey 2",
-            "collection_id": "c2",
-            "email": "skborey2@gmail.com"
-        },
-        "cb3": {
-            "_id": "cb3",
-            "name": "Borey 3",
-            "collection_id": "c3",
-            "email": "skborey3@gmail.com"
-        }
+        // "cb1": {
+        //     "_id": "cb1",
+        //     "name": "Borey 1",
+        //     "collection_id": "c1",
+        //     "email": "skborey1@gmail.com"
+        // },
+        // "cb2": {
+        //     "_id": "cb2",
+        //     "name": "Borey 2",
+        //     "collection_id": "c2",
+        //     "email": "skborey2@gmail.com"
+        // },
+        // "cb3": {
+        //     "_id": "cb3",
+        //     "name": "Borey 3",
+        //     "collection_id": "c3",
+        //     "email": "skborey3@gmail.com"
+        // }
     },
     relationC2R: [
-        ["c1", "r1"],
-        ["c1", "r3"],
-        ["c2", "r2"],
-        ["c2", "r3"],
-        ["c3", "r1"],
+        // ["c1", "r1"],
+        // ["c1", "r3"],
+        // ["c2", "r2"],
+        // ["c2", "r3"],
+        // ["c3", "r1"],
     ],
     relationC2C: [ // Relation between collection to collaborator is 1 -> Many, collaborator NOT refer to USER
-        ["c1", "cb1"],
-        ["c2", "cb3"],
-        ["c3", "cb2"],
+        // ["c1", "cb1"],
+        // ["c2", "cb3"],
+        // ["c3", "cb2"],
     ],
 }
 
@@ -170,27 +170,34 @@ const cases = {
      */
     ADD_NEW_COLLECTION: (state, action) => {
 
-        console.log('@TODO Handle respones from backend');
+        // console.log('@TODO Handle respones from backend', action);
 
-        const id = 'c111 from backend';
-        const email = 'email from backend';
-
-        const newColl = {
-            _id: id,
-            name: action.name,
-            owner_email: email
+        if (action.error) {
+            if (action.error.response.status === 401) { // maybe session expired
+                Cookies.remove('token');
+                return { ...state, sessions: {} }
+            }
         }
 
-        return {
-            ...state,
-            collections: {
-                ...state.collections,
-                [id]: newColl
-            },
-            // reset popup
-            popupPage: null,
-            popupErrMsg: null,
+        if (action.success) {
+            const _collection = {
+                _id: action.collection._id,
+                name: action.collection.name,
+                owner_email: action.collection.owner_email,
+            }
+            return {
+                ...state,
+                collections: {
+                    ...state.collections,
+                    [_collection._id]: _collection
+                },
+                // reset popup
+                popupPage: null,
+                popupErrMsg: null,
+            }
         }
+
+        return state;
     },
     
     SHOW_COLLECTION: (state, action) => {
