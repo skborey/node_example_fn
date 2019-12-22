@@ -209,7 +209,22 @@ const cases = {
 
     DELETE_COLLECTION: (state, action) => {
 
-        // console.log('@TODO Handle respones from backend');
+        console.log('@TODO Handle respones from backend');
+        if (action.error) {
+            if (action.error.response.status === 401) { // maybe session expired
+                Cookies.remove('token');
+                return { ...state, sessions: {} }
+            } else {
+                return { ...state, popupErrMsg: action.error.message }
+            }
+        }
+
+        if (!action.success) {
+            return {
+                ...state,
+                toast: action.message
+            }
+        }
 
         const id = action.id;
         const isCollectionOwner = (state.sessions.email === state.collections[id].ownerEmail);
