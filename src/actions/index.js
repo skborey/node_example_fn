@@ -69,7 +69,7 @@ export const showCollection = (id) => {
 
 export const deleteCollection = (id, token='') => {
     return {
-        type: TYPES.DELETE_COLLECTION, // API
+        type: TYPES.API_DELETE_COLLECTION, // API
         token: token,
         id: id,
     }

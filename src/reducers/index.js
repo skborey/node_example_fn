@@ -183,7 +183,7 @@ const cases = {
             const _collection = {
                 _id: action.collection._id,
                 name: action.collection.name,
-                owner_email: action.collection.owner_email,
+                ownerEmail: action.collection.owner_email,
             }
             return {
                 ...state,
@@ -209,11 +209,10 @@ const cases = {
 
     DELETE_COLLECTION: (state, action) => {
 
-        console.log('@TODO Handle respones from backend');
+        // console.log('@TODO Handle respones from backend');
 
         const id = action.id;
-        const isCollectionOwner = (state.sessions.email === 
-                                    state.collections[state.selectedCollectionId].ownerEmail);
+        const isCollectionOwner = (state.sessions.email === state.collections[id].ownerEmail);
 
         // Remove collection from store and relation base on ownership 
         // (if not collection owner we just remove them from that collection only but not delete that collection)
@@ -243,6 +242,7 @@ const cases = {
             relationC2R: _relationC2R,
             relationC2C: _relationC2C,
             selectedCollectionId: _selectedCollectionId,
+            toast: action.message,
         }
     },
 
