@@ -72,13 +72,6 @@ export const showCollection = (id) => {
 /**
     Collaborator action
  */
-export const deleteCollaborator = (id, token='') => {
-    return {
-        type: TYPES.DELETE_COLLABORATOR, // API
-        token: token,
-        id: id
-    }
-}
 
 export const addNewCollaborator = (name, email, collectionId, token='') => {
     return {
@@ -87,6 +80,23 @@ export const addNewCollaborator = (name, email, collectionId, token='') => {
         name: name,
         email: email,
         collectionId: collectionId,
+    }
+}
+ 
+export const renameCollaborator = (name, id, token='') => {
+    return {
+        type: TYPES.RENAME_COLLABORATOR, // API
+        token: token,
+        id: id,
+        name: name,
+    }
+}
+
+export const deleteCollaborator = (id, token='') => {
+    return {
+        type: TYPES.DELETE_COLLABORATOR, // API
+        token: token,
+        id: id
     }
 }
 

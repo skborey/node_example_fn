@@ -37,16 +37,23 @@
     border: 1px solid #eeeeee;
 }
 
-.collaborator-menu-cls ul li:hover {
+/* .collaborator-menu-cls ul li:hover, */
+/* .collaborator-menu-cls ul li:hover input, */
+.collaborator-menu-cls ul li input:focus,
+.collaborator-menu-cls ul li input:hover
+ {
     cursor: text;
     background: #ffffff;
-    border: 1px solid #ffffff;
 }
-.collaborator-menu-cls ul li span:first-child {
+/* .collaborator-menu-cls ul li span:first-child { */
+.collaborator-menu-cls ul li input {
+    font-family: 'Poppins', sans-serif;
     width: 90%;
     position: relative;
     display: inline-block;
     outline: none;
+    border: none;
+    background-color: #eeeeee;
 }
 
 .collaborator-menu-cls ul li span:last-child {

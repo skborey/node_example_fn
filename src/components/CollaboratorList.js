@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 
 import '../assets/collaborator.css';
 
-import { showPopup, deleteCollaborator } from '../actions';
+import { showPopup, deleteCollaborator, renameCollaborator } from '../actions';
 
 class CollaboratorList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            oldName: null,
+        }
     }
 
     deleteCollaborator = (id, name) => {
@@ -18,6 +20,19 @@ class CollaboratorList extends Component {
         if (!window.confirm(`"${name}" will be removed from current collection!`)) return;
 
         this.props.deleteCollaborator(id, this.props.sessions.token);
+    }
+
+    renameCollaborator = (e) => {
+
+        const name = e.target.value.trim();
+
+        if (name === this.state.oldName) return;
+
+        if (name) {
+            this.props.renameCollaborator(name, e.target.id, this.props.sessions.token);
+        } else {
+            e.target.value = this.state.oldName;
+        }
     }
 
     render () {
@@ -30,12 +45,13 @@ class CollaboratorList extends Component {
             let id = pair[1]; // ["collection-id", "colaborator-id"]
             return (
                 <li key={index}>
-                    <span
+                    <input
+                        title="Rename collaborator"
+                        defaultValue={collaborators[id].name}
                         id={collaborators[id]._id}
-                        onBlur={this.handleFinishRename}
-                    >
-                        {collaborators[id].name}
-                    </span>
+                        onFocus={(e) => { this.setState({ oldName: e.target.value })} }
+                        onBlur={this.renameCollaborator}
+                    />
                     <span 
                         title='Delete collection' 
                         onClick={() => this.deleteCollaborator(collaborators[id]._id, collaborators[id].name)}
@@ -72,6 +88,7 @@ export default connect(
   }),
   {
     showPopup: showPopup,
+    renameCollaborator: renameCollaborator,
     deleteCollaborator: deleteCollaborator,
   }
 )(CollaboratorList);

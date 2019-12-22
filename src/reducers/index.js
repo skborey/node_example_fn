@@ -254,31 +254,6 @@ const cases = {
     /**
      * Collaborator
      */
-    DELETE_COLLABORATOR: (state, action) => {
-        
-        console.log('@TODO Handle respones from backend');
-        const id = action.id
-
-        // delete from collaborator store
-        const collaborators = state.collaborators;
-        const _collaborators = Object.keys(collaborators)
-                            .filter(key => key !== id) // exclude the removed collaborator
-                                .reduce((result, current) => {
-                                    result[current] = collaborators[current];
-                                    return result;
-                                }, {});
-
-        // delete from relation
-        const _relationC2C = state.relationC2C.filter((pair) => // We remove collaborator from current collection only. But actually it doesn't have more than one already.
-                                !(pair[0] === state.selectedCollectionId && pair[1] === id));
-
-        return {
-            ...state,
-            relationC2C: _relationC2C,
-            collaborators: _collaborators,
-        }
-    },
-
     ADD_NEW_COLLABORATOR: (state, action) => {
 
         console.log('@TODO Handle respones from backend');
@@ -306,6 +281,44 @@ const cases = {
             // reset popup
             popupPage: null,
             popupErrMsg: null,
+        }
+    },
+
+    RENAME_COLLABORATOR: (state, action) => {
+
+        console.log('@TODO Handle respones from backend');
+
+        return {
+            ...state,
+            collaborators: {
+                ...state.collaborators,
+                [action.id]: action.name,
+            }
+        }
+    },
+
+    DELETE_COLLABORATOR: (state, action) => {
+        
+        console.log('@TODO Handle respones from backend');
+        const id = action.id
+
+        // delete from collaborator store
+        const collaborators = state.collaborators;
+        const _collaborators = Object.keys(collaborators)
+                            .filter(key => key !== id) // exclude the removed collaborator
+                                .reduce((result, current) => {
+                                    result[current] = collaborators[current];
+                                    return result;
+                                }, {});
+
+        // delete from relation
+        const _relationC2C = state.relationC2C.filter((pair) => // We remove collaborator from current collection only. But actually it doesn't have more than one already.
+                                !(pair[0] === state.selectedCollectionId && pair[1] === id));
+
+        return {
+            ...state,
+            relationC2C: _relationC2C,
+            collaborators: _collaborators,
         }
     },
 
