@@ -34,7 +34,7 @@ export const logout = (token) => {
 }
 
 /**
-    General trigger
+    Popup
  */
 export const showPopup = (name = {}) => {
     return {
@@ -43,14 +43,27 @@ export const showPopup = (name = {}) => {
     }
 }
 
+export const resetPopup = () => {
+    return {
+        type: TYPES.RESET_POPUP
+    }
+}
+
 /**
-    Collection actions
+    Collection
  */
  export const addNewCollection = (name, token='') => {
     return {
         type: TYPES.ADD_NEW_COLLECTION,
         token: token,
         name: name,
+    }
+}
+
+export const showCollection = (id) => {
+    return {
+        type: TYPES.SHOW_COLLECTION,
+        id: id
     }
 }
 
@@ -62,15 +75,8 @@ export const deleteCollection = (id, token='') => {
     }
 }
 
-export const showCollection = (id) => {
-    return {
-        type: TYPES.SHOW_COLLECTION,
-        id: id
-    }
-}
-
 /**
-    Collaborator action
+    Collaborator
  */
 
 export const addNewCollaborator = (name, email, collectionId, token='') => {
@@ -101,7 +107,7 @@ export const deleteCollaborator = (id, token='') => {
 }
 
 /**
-    Resturants actions
+    Restaurant
  */
 export const addRestaurantToCollection = (restaurantId, collectionId) => {
     return {
@@ -122,14 +128,5 @@ export const removeRestaurantFromCollection = (restaurantId, collectionId) => {
 export const apiGetRestaurants = (filter = {}) => {
     return {
         type: TYPES.API_GET_RESTAURANTS
-    }
-}
-
-/**
-    Trigger event
- */
-export const resetPopup = () => {
-    return {
-        type: TYPES.RESET_POPUP
     }
 }

@@ -4,12 +4,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import allReducers from './reducers';
+import reducers from './reducers';
 
 import apiMiddleware from './middleware/api'
 
 const store = createStore(
-    allReducers,
+    reducers,
     applyMiddleware(apiMiddleware)
 );
 

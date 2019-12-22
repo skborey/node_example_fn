@@ -166,7 +166,7 @@ const cases = {
     },
 
     /**
-     * Collection List
+     * Collection
      */
     ADD_NEW_COLLECTION: (state, action) => {
 
@@ -190,6 +190,13 @@ const cases = {
             // reset popup
             popupPage: null,
             popupErrMsg: null,
+        }
+    },
+    
+    SHOW_COLLECTION: (state, action) => {
+        return {
+            ...state,
+            selectedCollectionId: action.id
         }
     },
 
@@ -229,13 +236,6 @@ const cases = {
             relationC2R: _relationC2R,
             relationC2C: _relationC2C,
             selectedCollectionId: _selectedCollectionId,
-        }
-    },
-    
-    SHOW_COLLECTION: (state, action) => {
-        return {
-            ...state,
-            selectedCollectionId: action.id
         }
     },
 

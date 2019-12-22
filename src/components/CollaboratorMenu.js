@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import '../assets/collaborator.css';
+import '../assets/collaboratormenu.css';
 
 import { showPopup, deleteCollaborator, renameCollaborator } from '../actions';
 
@@ -35,6 +35,10 @@ class CollaboratorList extends Component {
         }
     }
 
+    handleOnChange = (e) => {
+        console.log(e);
+    }
+
     render () {
 
         const collaborators = this.props.collaborators;
@@ -47,9 +51,10 @@ class CollaboratorList extends Component {
                 <li key={index}>
                     <input
                         title="Rename collaborator"
-                        defaultValue={collaborators[id].name}
-                        id={collaborators[id]._id}
-                        onFocus={(e) => { this.setState({ oldName: e.target.value })} }
+                        type="text"
+                        value={collaborators[id].name}
+                        onFocus={(e) => { this.setState({ oldName: e.target.value })}}
+                        onChange={this.handleOnChange}
                         onBlur={this.renameCollaborator}
                     />
                     <span 

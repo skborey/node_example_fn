@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+
 import '../assets/search.css';
 
 class Search extends Component {
@@ -26,12 +27,12 @@ class Search extends Component {
                 </div>
                 <div>
                     <label><input type="checkbox" name="filter-day-ipt" value="Mon" /> Mon</label>
-                    <label><input type="checkbox" name="filter-day-ipt" value="Mon" /> Tus</label>
-                    <label><input type="checkbox" name="filter-day-ipt" value="Mon" /> Wed</label>
-                    <label><input type="checkbox" name="filter-day-ipt" value="Mon" /> Thu</label>
-                    <label><input type="checkbox" name="filter-day-ipt" value="Mon" /> Fri</label>
-                    <label><input type="checkbox" name="filter-day-ipt" value="Mon" /> Sat</label>
-                    <label><input type="checkbox" name="filter-day-ipt" value="Mon" /> Sun</label>
+                    <label><input type="checkbox" name="filter-day-ipt" value="Tus" /> Tus</label>
+                    <label><input type="checkbox" name="filter-day-ipt" value="Wed" /> Wed</label>
+                    <label><input type="checkbox" name="filter-day-ipt" value="Thu" /> Thu</label>
+                    <label><input type="checkbox" name="filter-day-ipt" value="Fri" /> Fri</label>
+                    <label><input type="checkbox" name="filter-day-ipt" value="Sat" /> Sat</label>
+                    <label><input type="checkbox" name="filter-day-ipt" value="Sun" /> Sun</label>
                     <select>{filterHH}</select>:<select>{filterMM}</select>
                     -
                     <select defaultValue="23" >{filterHH}</select>:<select defaultValue="59">{filterMM}</select>

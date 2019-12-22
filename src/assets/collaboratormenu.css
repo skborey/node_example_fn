@@ -36,17 +36,17 @@
     padding: 2px 10px ;
     border: 1px solid #eeeeee;
 }
-
-/* .collaborator-menu-cls ul li:hover, */
-/* .collaborator-menu-cls ul li:hover input, */
-.collaborator-menu-cls ul li input:focus,
-.collaborator-menu-cls ul li input:hover
- {
-    cursor: text;
-    background: #ffffff;
+.collaborator-menu-cls ul li span p {
+    margin: 0;
 }
-/* .collaborator-menu-cls ul li span:first-child { */
+
+.collaborator-menu-cls ul li:hover input,
+.collaborator-menu-cls ul li input:focus
+{
+    background-color: #ffffff;
+}
 .collaborator-menu-cls ul li input {
+    cursor: text;
     font-family: 'Poppins', sans-serif;
     width: 90%;
     position: relative;
