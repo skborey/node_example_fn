@@ -194,6 +194,7 @@ const apiMiddleware = (store) => (next) => (action) => {
                     type: T.DELETE_COLLABORATOR,
                     success: res.data.success,
                     message: res.data.message,
+                    id: action.id,
                 })
             } else {
                 store.dispatch({

@@ -301,6 +301,23 @@ const cases = {
     DELETE_COLLABORATOR: (state, action) => {
         
         console.log('@TODO Handle respones from backend');
+
+        if (action.error) {
+            if (action.error.response.status === 401) { // maybe session expired
+                Cookies.remove('token');
+                return { ...state, sessions: {} }
+            } else {
+                return { ...state, popupErrMsg: action.error.message }
+            }
+        }
+
+        if (!action.success) {
+            return {
+                ...state,
+                toast: action.message
+            }
+        }
+
         const id = action.id
 
         // delete from collaborator store
@@ -320,6 +337,7 @@ const cases = {
             ...state,
             relationC2C: _relationC2C,
             collaborators: _collaborators,
+            toast: action.message
         }
     },
 
