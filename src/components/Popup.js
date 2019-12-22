@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addNewCollection, resetPopup, register, login } from '../actions/';
+import { addNewCollection, addNewCollaborator, resetPopup, register, login } from '../actions/';
 
 import '../assets/popup.css';
 
@@ -23,7 +23,7 @@ class Popup extends Component {
         this.passwordReg$ = React.createRef();
         this.confirmReg$ = React.createRef();
 
-        this.newCollectionTitle$ = React.createRef();
+        this.newCollectionName$ = React.createRef();
 
         this.nameCollaborator$ = React.createRef();
         this.emailCollaborator$ = React.createRef();
@@ -98,10 +98,10 @@ class Popup extends Component {
 
             case 'addNewCollection':
 
-                name = this.newCollectionTitle$.current.value;
+                name = this.newCollectionName$.current.value;
                 name = name ? name.trim() : null;
 
-                this.newCollectionTitle$.current.style.borderColor = name ? '': '#ff5722';
+                this.newCollectionName$.current.style.borderColor = name ? '': '#ff5722';
 
                 if (name) {
                     this.setState({popupErrMsg: null});
@@ -124,6 +124,12 @@ class Popup extends Component {
 
                 if (name && isEmail) {
                     this.setState({popupErrMsg: null});
+                    this.props.addNewCollaborator(
+                        name, 
+                        email, 
+                        this.props.selectedCollectionId, 
+                        this.props.sessions.token
+                    );
                 } else {
                     this.setState({popupErrMsg: "Invalid data."});
                 }
@@ -223,7 +229,7 @@ class Popup extends Component {
                         <label>Title * : </label>
                         <input
                             type="text"
-                            ref={this.newCollectionTitle$}
+                            ref={this.newCollectionName$}
                         /><br />
                     </div>
                     <div>
@@ -289,9 +295,11 @@ export default connect(
     sessions: state.sessions,
     popupPage: state.popupPage,
     popupErrMsg: state.popupErrMsg,
+    selectedCollectionId: state.selectedCollectionId,
   }),
   {
     addNewCollection: addNewCollection,
+    addNewCollaborator: addNewCollaborator,
     resetPopup: resetPopup,
     register: register,
     login: login,

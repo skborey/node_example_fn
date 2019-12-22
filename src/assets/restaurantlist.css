@@ -19,6 +19,11 @@
     margin: 3px;
 }
 
+.restaurant-list-cls .list-cls button {
+    width: 100%;
+    height: 30px;
+}
+
 .restaurant-list-cls .list-cls select {
     /* float: right; */
     display: block;

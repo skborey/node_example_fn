@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import '../assets/collaborator.css';
 
-import { showPopup } from '../actions';
+import { showPopup, deleteCollaborator } from '../actions';
 
 class CollaboratorList extends Component {
 
@@ -13,51 +13,51 @@ class CollaboratorList extends Component {
         this.state = {}
     }
 
-    handleFinishRename = (e) => {
-        let id = e.target.id;
-        let name = e.target.innerText
-        console.log(id, name);
-    }
+    deleteCollaborator = (id, name) => {
+        
+        if (!window.confirm(`"${name}" will be removed from current collection!`)) return;
 
-    handleOnDeleteCollaborator = (id) => {
-        console.log(id);
+        this.props.deleteCollaborator(id, this.props.sessions.token);
     }
 
     render () {
 
-        let collections = this.props.collectionList.collections;
-        let collaborators = this.props.collectionList.collaborators;
-        let collaboratorMenu = (this.props.showCollectionId) ?
-            collections[this.props.showCollectionId].collaborators.map((id, index) => {
-                return (
-                    <li key={index} >
-                        <span
-                            id={collaborators[id]._id}
-                            title='Click to rename'
-                            contentEditable="true"
-                            onBlur={this.handleFinishRename}
-                        >
-                            {collaborators[id].name}
-                        </span>
-                        <span 
-                            title='Delete collection' 
-                            onClick={() => this.handleOnDeleteCollaborator(collaborators[id]._id)}
-                        >x</span>
-                    </li>
-                )}) : null;
+        const collaborators = this.props.collaborators;
+        const relations = this.props.relationC2C
+                        .filter(pair => pair[0] === this.props.selectedCollectionId);
+
+        const list = relations.map((pair, index) => {
+            let id = pair[1]; // ["collection-id", "colaborator-id"]
+            return (
+                <li key={index}>
+                    <span
+                        id={collaborators[id]._id}
+                        onBlur={this.handleFinishRename}
+                    >
+                        {collaborators[id].name}
+                    </span>
+                    <span 
+                        title='Delete collection' 
+                        onClick={() => this.deleteCollaborator(collaborators[id]._id, collaborators[id].name)}
+                    >x</span>
+                </li>
+            );
+        });
 
         return (
-            (this.props.sessions.email && this.props.showCollectionId) ? (
-                <div className="collaborator-menu-cls">
-                    <h5>Collaborators</h5>
-                    <ul>
-                        {collaboratorMenu}
-                    </ul>
-                    <button 
-                        className="btn-addnew-cls"
-                        onClick={ () => this.props.showPopup('addNewCollaborator')}
-                    >+ Add New Collaborator</button>
-                </div>
+            (this.props.sessions.email
+                && this.props.selectedCollectionId)
+                ? (
+                    <div className="collaborator-menu-cls">
+                        <h5>Collaborators</h5>
+                        <ul>
+                            {list}
+                        </ul>
+                        <button 
+                            className="btn-addnew-cls"
+                            onClick={ () => this.props.showPopup('addNewCollaborator')}
+                        >+ Add New Collaborator</button>
+                    </div>
             ):(null)
         );
     }
@@ -66,10 +66,12 @@ class CollaboratorList extends Component {
 export default connect(
   (state, props) => ({
     sessions: state.sessions,
-    collectionList: state.collectionList,
-    showCollectionId: state.showCollectionId,
+    selectedCollectionId: state.selectedCollectionId,
+    collaborators: state.collaborators,
+    relationC2C: state.relationC2C,
   }),
   {
-      showPopup: showPopup,
+    showPopup: showPopup,
+    deleteCollaborator: deleteCollaborator,
   }
 )(CollaboratorList);

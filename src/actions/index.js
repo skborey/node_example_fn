@@ -34,7 +34,7 @@ export const logout = (token) => {
 }
 
 /**
-    Event trigger actions
+    General trigger
  */
 export const showPopup = (name = {}) => {
     return {
@@ -43,47 +43,75 @@ export const showPopup = (name = {}) => {
     }
 }
 
-
 /**
     Collection actions
  */
- export const addNewCollection = (name, token = '') => {
+ export const addNewCollection = (name, token='') => {
     return {
-        type: TYPES.API_ADD_NEW_COLLECTION,
+        type: TYPES.ADD_NEW_COLLECTION,
         token: token,
         name: name,
     }
 }
 
-export const deleteCollection = (id, token = '') => {
+export const deleteCollection = (id, token='') => {
     return {
-        type: TYPES.API_DELETE_COLLECTION,
+        type: TYPES.DELETE_COLLECTION, // API
         token: token,
         id: id,
     }
 }
 
-export const showRestaurantInCollection = (index) => {
+export const showCollection = (id) => {
     return {
-        type: TYPES.SHOW_RESTAURANT_IN_COLLECTION,
-        index: index
+        type: TYPES.SHOW_COLLECTION,
+        id: id
+    }
+}
+
+/**
+    Collaborator action
+ */
+export const deleteCollaborator = (id, token='') => {
+    return {
+        type: TYPES.DELETE_COLLABORATOR, // API
+        token: token,
+        id: id
+    }
+}
+
+export const addNewCollaborator = (name, email, collectionId, token='') => {
+    return {
+        type: TYPES.ADD_NEW_COLLABORATOR, // API
+        token: token,
+        name: name,
+        email: email,
+        collectionId: collectionId,
     }
 }
 
 /**
     Resturants actions
  */
-export const addRestaurantToCollection = (restaurant, collectionIndex) => {
+export const addRestaurantToCollection = (restaurantId, collectionId) => {
     return {
-        type: TYPES.ADD_RESTAURANT_TO_COLLECTION,
-        restaurant: restaurant,
-        collectionIndex: collectionIndex
+        type: TYPES.ADD_RESTAURANT_TO_COLLECTION, // API
+        restaurantId: restaurantId,
+        collectionId: collectionId
     }
 }
 
-export const apiGetRestaurantLists = (filter = {}) => {
+export const removeRestaurantFromCollection = (restaurantId, collectionId) => {
     return {
-        type: TYPES.API_GET_RESTAURANT_LISTS
+        type: TYPES.REMOVE_RESTAURANT_FROM_COLLECTION, // API
+        restaurantId: restaurantId,
+        collectionId: collectionId
+    }
+}
+
+export const apiGetRestaurants = (filter = {}) => {
+    return {
+        type: TYPES.API_GET_RESTAURANTS
     }
 }
 
@@ -92,6 +120,6 @@ export const apiGetRestaurantLists = (filter = {}) => {
  */
 export const resetPopup = () => {
     return {
-        type: 'RESET_POPUP'
+        type: TYPES.RESET_POPUP
     }
 }

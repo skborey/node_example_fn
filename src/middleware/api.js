@@ -40,19 +40,19 @@ const apiMiddleware = (store) => (next) => (action) => {
 
       break;
 
-    case T.API_GET_RESTAURANT_LISTS:
+    case T.API_GET_RESTAURANTS:
 
       next(action)
       axios.get(API + "/restaurants")
         .then(res => {
             if (res.data.success) {
                 store.dispatch({
-                    type: 'GET_RESTAURANT_LISTS',
+                    type: T.GET_RESTAURANTS,
                     restaurants: res.data.data,
                 })
             } else {
                 store.dispatch({
-                    type: 'GET_RESTAURANT_LISTS',
+                    type: T.GET_RESTAURANTS,
                     restaurants: [],
                 })
             }
@@ -120,7 +120,6 @@ const apiMiddleware = (store) => (next) => (action) => {
             })
         })
       break;
-
 
     case T.API_REGISTER:
 

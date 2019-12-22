@@ -7,93 +7,74 @@ const initialState = {
     },
     popupPage: null,
     popupErrMsg: null,
-    showCollectionId: '5df553709a2f48293c99afdf', // will reset when search click search button
-    collectionList:{
-        "collections": {
-            "5df553709a2f48293c99afdf": {
-                "restaurants": [],
-                "collaborators": [
-                    "5df6614022eb0971498f3b6c",
-                    "5df6614022eb0971498f3b6d"
-                ],
-                "_id": "5df553709a2f48293c99afdf",
-                "name": "The weekend favorite",
-                "owner_email": "skborey@gmail.com"
-            },
-            "5df665c522eb0971498f3d6a": {
-                "restaurants": [],
-                "collaborators": [],
-                "_id": "5df665c522eb0971498f3d6a",
-                "name": "New collections new ------4",
-                "owner_email": "skborey@gmail.com"
-            }
+    toast: null, // reserve for general information or success message
+    selectedCollectionId: null,
+    collections: {
+        "c1": {
+            "_id": "c1",
+            "name": "The favorite weekend",
+            "ownerEmail": "skborey@gmail.com"
         },
-        "restaurants": {},
-        "collaborators": {
-            "5df6614022eb0971498f3b6c": {
-                "_id": "5df6614022eb0971498f3b6c",
-                "name": "Borey",
-                "email": "skborey@mailsac.com"
-            },
-            "5df6614022eb0971498f3b6d": {
-                "_id": "5df6614022eb0971498f3b6d",
-                "name": "Borey2",
-                "email": "skborey2@mailsac.com"
-            }
+        "c2": {
+            "_id": "c2",
+            "name": "New collection 1",
+            "ownerEmail": "skborey1@gmail.com"
+        },
+        "c3": {
+            "_id": "c3",
+            "name": "New collection 2",
+            "ownerEmail": "skborey@gmail.com"
         }
     },
-    restaurantList:[
-        {
-            "_id": "5df0f57efe9773b24e74bf40",
-            "name": "Osakaya Restaurant",
-            "hours": "Mon-Thu, Sun 11:30 am - 9 pm  / Fri-Sat 11:30 am - 9:30 pm"
+    restaurants: {
+        "r1": {
+            "_id": "r1",
+            "name": "Restuarant 1",
+            "open": "7 AM - 9 AM"
         },
-        {
-            "_id": "5df0f57efe9773b24e74bf41",
-            "name": "The Stinking Rose",
-            "hours": "Mon-Thu, Sun 11:30 am - 10 pm  / Fri-Sat 11:30 am - 11 pm"
+        "r2": {
+            "_id": "r2",
+            "name": "Restuarant 2",
+            "open": "8 AM - 10 AM"
         },
-        {
-            "_id": "5df0f57efe9773b24e74bf42",
-            "name": "Kushi Tsuru",
-            "hours": "Mon-Sun 11:30 am - 9 pm"
-        },
-        {
-            "_id": "5df0f57efe9773b24e74bf43",
-            "name": "McCormick & Kuleto's",
-            "hours": "Mon-Thu, Sun 11:30 am - 10 pm  / Fri-Sat 11:30 am - 11 pm"
-        },
-        {
-            "_id": "5df0f57efe9773b24e74bf44",
-            "name": "Mifune Restaurant",
-            "hours": "Mon-Sun 11 am - 10 pm"
-        },
-        {
-            "_id": "5df0f57efe9773b24e74bf45",
-            "name": "New Delhi Indian Restaurant",
-            "hours": "Mon-Sat 11:30 am - 10 pm  / Sun 5:30 pm - 10 pm"
-        },
-        {
-            "_id": "5df0f57efe9773b24e74bf46",
-            "name": "The Cheesecake Factory",
-            "hours": "Mon-Thu 11 am - 11 pm  / Fri-Sat 11 am - 12:30 am  / Sun 10 am - 11 pm"
-        },
-        {
-            "_id": "5df0f57efe9773b24e74bf47",
-            "name": "Iroha Restaurant",
-            "hours": "Mon-Thu, Sun 11:30 am - 9:30 pm  / Fri-Sat 11:30 am - 10 pm"
-        },
-        {
-            "_id": "5df0f57efe9773b24e74bf48",
-            "name": "Canton Seafood & Dim Sum Restaurant",
-            "hours": "Mon-Fri 10:30 am - 9:30 pm  / Sat-Sun 10 am - 9:30 pm"
-        },
-        {
-            "_id": "5df0f57efe9773b24e74bf49",
-            "name": "Alioto's Restaurant",
-            "hours": "Mon-Sun 11 am - 11 pm"
+        "r3": {
+            "_id": "r3",
+            "name": "Restuarant 3",
+            "open": "9 AM - 11 AM"
         }
-    ]
+    },
+    collaborators: {
+        "cb1": {
+            "_id": "cb1",
+            "name": "Borey 1",
+            "collection_id": "c1",
+            "email": "skborey1@gmail.com"
+        },
+        "cb2": {
+            "_id": "cb2",
+            "name": "Borey 2",
+            "collection_id": "c2",
+            "email": "skborey2@gmail.com"
+        },
+        "cb3": {
+            "_id": "cb3",
+            "name": "Borey 3",
+            "collection_id": "c3",
+            "email": "skborey3@gmail.com"
+        }
+    },
+    relationC2R: [
+        ["c1", "r1"],
+        ["c1", "r3"],
+        ["c2", "r2"],
+        ["c2", "r3"],
+        ["c3", "r1"],
+    ],
+    relationC2C: [ // Relation between collection to collaborator is 1 -> Many, collaborator NOT refer to USER
+        ["c1", "cb1"],
+        ["c2", "cb3"],
+        ["c3", "cb2"],
+    ],
 }
 
 const cases = {
@@ -115,9 +96,6 @@ const cases = {
         }
     },
 
-    /**
-     * Header
-     */
     SHOW_POPUP: (state, action) => { return Object.assign({}, state,
         {
             popupPage: action.name,
@@ -202,87 +180,166 @@ const cases = {
     /**
      * Collection List
      */
-
     ADD_NEW_COLLECTION: (state, action) => {
-        if (action.error) { console.log(action.error);
-            return Object.assign({}, state,
-            {
-                popupErrMsg: "OOP! Something went wrong.",
-            });
-        } else if (action.success) { console.log(action.collection)
-            // Add new object to existing one: https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns/
 
-            return {
-                ...state,
-                collectionList: {
-                    ...state.collectionList,
-                    collections: {
-                        ...state.collectionList.collections,
-                        [action.collection._id]: action.collection
-                    }
-                },
-                // reset back popup
-                popupPage: null,
-                popupErrMsg: null,
-            }
-        } else {
-            return Object.assign({}, state, {
-                popupErrMsg: action.error,
-            })
+        console.log('@TODO Handle respones from backend');
+
+        const id = 'c111 from backend';
+        const email = 'email from backend';
+
+        const newColl = {
+            _id: id,
+            name: action.name,
+            owner_email: email
+        }
+
+        return {
+            ...state,
+            collections: {
+                ...state.collections,
+                [id]: newColl
+            },
+            // reset popup
+            popupPage: null,
+            popupErrMsg: null,
         }
     },
 
     DELETE_COLLECTION: (state, action) => {
-        if (action.error) { console.log(action.error);
-            return Object.assign({}, state,
-            {
-                popupErrMsg: "OOP! Something went wrong.",
-            });
-        } else if (action.success) { console.log(action, state)
-            // remove and item from object
-            const collections = state.collectionList.collections
-            const newCollections =  Object.keys(collections)
-                                .filter(key => key !== action.id)
+
+        console.log('@TODO Handle respones from backend');
+
+        const id = action.id;
+        const isCollectionOwner = (state.sessions.email === 
+                                    state.collections[state.selectedCollectionId].ownerEmail);
+
+        // Remove collection from store and relation base on ownership 
+        // (if not collection owner we just remove them from that collection only but not delete that collection)
+        const collections = state.collections;
+        const _collections = isCollectionOwner ?
+                        (Object.keys(collections)
+                            .filter(key => key !== id) // exclude the removed collection
                                 .reduce((result, current) => {
                                     result[current] = collections[current];
                                     return result;
-                                }, {});
+                                }, {})
+                        ) : collections;
 
-            // collection is removed, all current restorant should be remvoe as well
-            const newShowCollectionId = (state.showCollectionId === action.id) ? null : state.showCollectionId;
+        const _relationC2R = isCollectionOwner ? 
+                        state.relationC2R.filter((pair) => pair[0] !== id)
+                            : state.relationC2R;
 
-            return {
-                ...state,
-                collectionList: {
-                    ...state.collectionList,
-                    collections: newCollections
-                },
-                showCollectionId: newShowCollectionId,
-            }
+        const _relationC2C = state.relationC2C.filter((pair) => pair[0] !== id);
+
+        // reset the selected collection id
+        const _selectedCollectionId = state.selectedCollectionId === id ?
+                                            null: state.selectedCollectionId;
+
+        return {
+            ...state,
+            collections: _collections,
+            relationC2R: _relationC2R,
+            relationC2C: _relationC2C,
+            selectedCollectionId: _selectedCollectionId,
+        }
+    },
+    
+    SHOW_COLLECTION: (state, action) => {
+        return {
+            ...state,
+            selectedCollectionId: action.id
         }
     },
 
-    SHOW_RESTAURANT_IN_COLLECTION: (state, action) => {
+    /**
+     * Collaborator
+     */
+    DELETE_COLLABORATOR: (state, action) => {
+        
+        console.log('@TODO Handle respones from backend');
+        const id = action.id
 
-        // show all restaurant inside the selected collection
-        let newRestaurantList = [...state.collectionList[action.index].restaurants]
+        // delete from collaborator store
+        const collaborators = state.collaborators;
+        const _collaborators = Object.keys(collaborators)
+                            .filter(key => key !== id) // exclude the removed collaborator
+                                .reduce((result, current) => {
+                                    result[current] = collaborators[current];
+                                    return result;
+                                }, {});
 
-        return Object.assign({}, state, {
-            restaurantList: newRestaurantList
-        })
+        // delete from relation
+        const _relationC2C = state.relationC2C.filter((pair) => // We remove collaborator from current collection only. But actually it doesn't have more than one already.
+                                !(pair[0] === state.selectedCollectionId && pair[1] === id));
+
+        return {
+            ...state,
+            relationC2C: _relationC2C,
+            collaborators: _collaborators,
+        }
+    },
+
+    ADD_NEW_COLLABORATOR: (state, action) => {
+
+        console.log('@TODO Handle respones from backend');
+
+        const id = "_id get from backend";
+
+        const collectionId = action.collectionId
+        const _collaborator = {
+            _id: id,
+            name: action.name,
+            collection_id: collectionId,
+            email: action.email
+        }
+        
+        return {
+            ...state,
+            collaborators: {
+                ...state.collaborators,
+                [id]: _collaborator
+            },
+            relationC2C: [
+                ...state.relationC2C,
+                [collectionId, id]
+            ],
+            // reset popup
+            popupPage: null,
+            popupErrMsg: null,
+        }
     },
 
     /**
-     * Restaurant List
+     * Restaurant
      */
     ADD_RESTAURANT_TO_COLLECTION: (state, action) => {
 
-        // ajax to backend to add new collection
+        console.log('@TODO Handle respones from backend');
 
-        return state;
+        return {
+            ...state,
+            relationC2R: [
+                ...state.relationC2R,
+                [action.collectionId, action.restaurantId]
+            ]
+        }
     },
 
-    GET_RESTAURANT_LISTS: (state, action) => {
+    REMOVE_RESTAURANT_FROM_COLLECTION: (state, action) => {
+
+        console.log('@TODO Handle respones from backend');
+
+        const _relationC2R = state.relationC2R.filter(
+            (pair) => !(pair[0] === action.collectionId &&
+                            pair[1] === action.restaurantId));
+
+        return {
+            ...state,
+            relationC2R: _relationC2R
+        }
+    },
+
+    GET_RESTAURANTS: (state, action) => {
         return Object.assign({}, state, {
             restaurantList: action.restaurants
         })
