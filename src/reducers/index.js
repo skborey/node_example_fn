@@ -80,101 +80,89 @@ const initialState = {
 const cases = {
 
     INITIALIZE_SESSION: (state, action) => {
-        if (action.sessions.email && action.sessions.token) {
-            return Object.assign({}, state,
-            {
-                sessions: action.sessions
-            });
-        } else {
 
-            Cookies.remove('token');
+        const _sessions = (action.sessions.email 
+                            && action.sessions.token) ?
+                                 action.sessions : {};
 
-            return Object.assign({}, state, 
-            {
-                sessions: {}
-            }); 
+        return {
+            ...state,
+            sessions: _sessions
         }
     },
 
-    SHOW_POPUP: (state, action) => { return Object.assign({}, state,
-        {
+    SHOW_POPUP: (state, action) => {
+
+        return {
+            ...state,
             popupPage: action.name,
         }
-    )},
+    },
 
-    RESET_POPUP: (state, action) => { return Object.assign({}, state,
-        {
+    RESET_POPUP: (state, action) => { 
+        
+        return {
+            ...state,
             popupPage: null,
             popupErrMsg: null,
         }
-    )},
+    },
 
     REGISTER: (state, action) => {
-        if (action.error) { console.error(action);
-            return Object.assign({}, state,
-            {
-                popupErrMsg: "OOP! Something went wrong.",
-            });
-        } else {
-            if (action.message) {
-                return Object.assign({}, state,
-                {
-                    popupErrMsg: action.message,
-                });
-            } else {
 
-                return Object.assign({}, state,
-                {
-                    popupErrMsg: "Account is created successfully.",
-                });
-            }
+        const _popupErrMsg = (action.error) ?
+                                "OOP! Something went wrong." : action.message ?
+                                        action.message :
+                                            "Account is created successfully.";
+        return {
+            ...state,
+            popupErrMsg: _popupErrMsg,
         }
     },
 
     LOGIN: (state, action) => {
+        
         if (action.error) {
-            return Object.assign({}, state,
-            {
+
+            return {
+                ...state,
                 sessions: {},
                 popupErrMsg: "OOP! Something went wrong.",
-            });
-        } else {
-            console.log(action);
-            if (action.response.success) {
-                
-                Cookies.set('token', action.response.token, { expires: 1 });
+            }
+        } else if (action.response.success) {
 
-                return Object.assign({}, state, 
-                {
-                    sessions: { email: action.email, token: action.response.token },
-                    popupPage: null,
-                    popupErrMsg: null,
-                });
-            } else {
-                return Object.assign({}, state, 
-                {
-                    sessions: {},
-                    // popupPage: null,
-                    popupErrMsg: action.response.message,
-                });
+            Cookies.set('token', action.response.token, { expires: 1 });
+            
+            return {
+                ...state,
+                sessions: { email: action.email, token: action.response.token },
+                popupErrMsg: null,
+                popupPage: null,
+            }
+        } else {
+
+            return {
+                ...state,
+                sessions: {},
+                popupErrMsg: action.response.message,
             }
         }
     },
 
     LOGOUT: (state, action) => {
-        if (action.error) {
-            console.log('Not handle yet');
-        } else {
-            if (action.response.success) {
+
+        if (action.response.success) {
                 
                 Cookies.remove('token');
 
-                return Object.assign({}, state, { sessions: {} });
-            } else {
-                console.log('Not handle yet');
-            }
+                return { ...state, sessions: {} }
+        } else if (action.error) {
+            console.log('@TODO Not handle yet with is error.');
+        } else {
+            console.log('@TODO Not handle yet.');
         }
-        return state; // Becareful and remember reducer must return state, otherwise other componment maybe gone wrong
+
+        return state;
     },
 
     /**
