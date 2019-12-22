@@ -14,11 +14,16 @@ class Header extends Component {
     }
 
     showPopup = (e) => {
+        console.log(e);
         this.props.showPopup(e.target.dataset.action);
     }
 
     handleLogoutClick = (e) => {
         this.props.logout(this.props.sessions.token);
+    }
+
+    reload = (e) => {
+        window.location.reload();;
     }
 
     render () {
@@ -37,7 +42,7 @@ class Header extends Component {
 
         return (
             <div className='header-cls'>
-                <img alt="icon" src={process.env.PUBLIC_URL + '/icon.png'} />
+                <img alt="icon" src={process.env.PUBLIC_URL + '/icon.png'} onClick={this.reload}/>
                 <h1>Is it open!</h1>
                 {sessionButton}
             </div>

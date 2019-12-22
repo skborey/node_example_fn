@@ -13,6 +13,7 @@
 
 .header-cls img {
     position: absolute;
+    cursor: pointer;
 }
 
 .header-cls h1 {
