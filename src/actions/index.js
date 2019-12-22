@@ -102,7 +102,7 @@ export const renameCollaborator = (name, id, token='') => {
 
 export const deleteCollaborator = (id, token='') => {
     return {
-        type: TYPES.DELETE_COLLABORATOR, // API
+        type: TYPES.API_DELETE_COLLABORATOR,
         token: token,
         id: id
     }

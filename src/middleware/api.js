@@ -184,6 +184,33 @@ const apiMiddleware = (store) => (next) => (action) => {
         })
       break;
 
+    case T.API_DELETE_COLLABORATOR:
+
+      next(action)
+      axios.delete(API + "/collaborations/" + action.id, { headers: { Authorization: action.token } } )
+        .then(res => { console.log('Delete colloborator from collection: ', res)
+            if (res.data.success) {
+                store.dispatch({
+                    type: T.DELETE_COLLABORATOR,
+                    success: res.data.success,
+                    message: res.data.message,
+                })
+            } else {
+                store.dispatch({
+                    type: T.DELETE_COLLABORATOR,
+                    success: res.data.success,
+                    message: res.data.message,
+                })
+            }
+        })
+        .catch(err => {  console.log('Delete colaborator from collection: ', err)
+            store.dispatch({
+                type: T.DELETE_COLLABORATOR,
+                error: err
+            })
+        })
+      break;
+
     case T.API_REGISTER:
 
       next(action)
