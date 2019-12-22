@@ -97,7 +97,7 @@ class RestaurantList extends Component {
                         <option value='addNewCollection'>+ Create New Collection</option>
                     </select>
                   ) : (
-                    <button onClick={() => this.props.showPopup('register')}>+ Add to Collection</button>
+                    <button onClick={() => this.props.showPopup('login')}>+ Add to Collection</button>
                   )
                 }
 

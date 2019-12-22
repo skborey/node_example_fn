@@ -69,7 +69,7 @@ export const showCollection = (id) => {
 
 export const deleteCollection = (id, token='') => {
     return {
-        type: TYPES.API_DELETE_COLLECTION, // API
+        type: TYPES.API_DELETE_COLLECTION,
         token: token,
         id: id,
     }
@@ -81,7 +81,7 @@ export const deleteCollection = (id, token='') => {
 
 export const addNewCollaborator = (name, email, collectionId, token='') => {
     return {
-        type: TYPES.API_ADD_NEW_COLLABORATOR, // API
+        type: TYPES.API_ADD_NEW_COLLABORATOR,
         token: token,
         body: {
             name: name,
@@ -113,7 +113,7 @@ export const deleteCollaborator = (id, token='') => {
  */
 export const addRestaurantToCollection = (restaurantId, collectionId, token='') => {
     return {
-        type: TYPES.API_ADD_RESTAURANT_TO_COLLECTION, // API
+        type: TYPES.API_ADD_RESTAURANT_TO_COLLECTION,
         token: token,
         body: {
             restaurant_id: restaurantId,
