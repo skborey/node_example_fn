@@ -113,7 +113,7 @@ class RestaurantList extends Component {
 
     return (
         <div className="restaurant-list-cls" style={style}>
-            { list.length > 0 ? list : (<h3>There is no records!</h3>)}
+            { list.length > 0 ? list : <h3>There is no record.</h3> }
         </div>
     );
   }

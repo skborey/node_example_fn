@@ -16,22 +16,22 @@ const apiMiddleware = (store) => (next) => (action) => {
       next(action)
       axios.get(API + "/user", { headers: { Authorization: action.token } })
         .then(res => {
-            if (res.data.success) {
-                store.dispatch({
-                    type: T.INITIALIZE_SESSION,
-                    sessions: {
-                      email: res.data.email,
-                      token: action.token
-                    }
-                })
-            } else {
-                store.dispatch({
-                    type: T.INITIALIZE_SESSION,
-                    sessions: {},
-                })
-            }
+
+          let response = res.data;
+          let payload = (response.success) ? {
+              type: T.INITIALIZE_SESSION,
+              sessions: {
+                email: response.email,
+                token: action.token
+              }
+            } : {
+              type: T.INITIALIZE_SESSION,
+              sessions: {},
+            };
+
+          store.dispatch(payload);
         })
-        .catch(err => {
+        .catch(err => { //err.response.status=401
             store.dispatch({
                 type: T.INITIALIZE_SESSION,
                 sessions: {},
@@ -45,24 +45,23 @@ const apiMiddleware = (store) => (next) => (action) => {
       next(action)
       axios.get(API + "/restaurants")
         .then(res => {
-            if (res.data.success) {
-                store.dispatch({
-                    type: T.GET_RESTAURANTS,
-                    restaurants: res.data.data,
-                })
-            } else {
-                store.dispatch({
-                    type: T.GET_RESTAURANTS,
-                    restaurants: [],
-                })
-            }
+          let response = res.data;
+          let payload = (response.success) ? {
+              type: T.GET_RESTAURANTS,
+              restaurants: response.restaurants,
+            } : {
+              type: T.GET_RESTAURANTS,
+              restaurants: {},
+            };
+
+          store.dispatch(payload);
         })
         .catch(err => {
             store.dispatch({
-                type: 'GET_RESTAURANT_LISTS',
-                restaurants: [],
+                type: T.GET_RESTAURANTS,
+                restaurants: {},
             })
-        })
+        });
       break;
 
     case T.API_ADD_NEW_COLLECTION:

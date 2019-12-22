@@ -341,9 +341,11 @@ const cases = {
     },
 
     GET_RESTAURANTS: (state, action) => {
-        return Object.assign({}, state, {
-            restaurantList: action.restaurants
-        })
+        
+        return {
+            ...state,
+            restaurants: action.restaurants,
+        }
     }
 
 }
