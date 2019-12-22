@@ -112,7 +112,7 @@ const apiMiddleware = (store) => (next) => (action) => {
                     id: action.id,
                 })
             } else {
-                store.dispatch({
+                 store.dispatch({
                     type: T.DELETE_COLLECTION,
                     success: res.data.success,
                     message: res.data.message,
@@ -123,6 +123,35 @@ const apiMiddleware = (store) => (next) => (action) => {
         .catch(err => {  console.log('delete collection: ', err)
             store.dispatch({
                 type: T.DELETE_COLLECTION,
+                error: err
+            })
+        })
+      break;
+    
+    case T.API_ADD_NEW_COLLABORATOR:
+
+      next(action)
+      axios.put(API + "/collaborations", action.body, { headers: { Authorization: action.token } } )
+        .then(res => { console.log('Add new colloborator to collection: ', res)
+            if (res.data.success) {
+                store.dispatch({
+                    type: T.ADD_NEW_COLLABORATOR,
+                    success: res.data.success,
+                    message: res.data.message,
+                    collaborator: res.data.collaborator,
+                    relationC2C: res.data.relationC2C,
+                })
+            } else {
+                store.dispatch({
+                    type: T.ADD_NEW_COLLABORATOR,
+                    success: res.data.success,
+                    message: res.data.message,
+                })
+            }
+        })
+        .catch(err => {  console.log('Add new colaborator to collection: ', err)
+            store.dispatch({
+                type: T.ADD_NEW_COLLABORATOR,
                 error: err
             })
         })

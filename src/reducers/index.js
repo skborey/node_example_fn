@@ -251,31 +251,37 @@ const cases = {
      */
     ADD_NEW_COLLABORATOR: (state, action) => {
 
-        console.log('@TODO Handle respones from backend');
+        console.log('@TODO Handle respones from backend', action);
 
-        const id = "_id get from backend";
-
-        const collectionId = action.collectionId
-        const _collaborator = {
-            _id: id,
-            name: action.name,
-            collection_id: collectionId,
-            email: action.email
+        if (action.error) {
+            if (action.error.response.status === 401) { // maybe session expired
+                Cookies.remove('token');
+                return { ...state, sessions: {} }
+            } else {
+                return { ...state, popupErrMsg: action.error.message }
+            }
         }
-        
-        return {
-            ...state,
-            collaborators: {
-                ...state.collaborators,
-                [id]: _collaborator
-            },
-            relationC2C: [
-                ...state.relationC2C,
-                [collectionId, id]
-            ],
-            // reset popup
-            popupPage: null,
-            popupErrMsg: null,
+
+        if (action.success) {
+            let _collaborator = action.collaborator;
+            let _relationC2C = action.relationC2C;
+
+            return {
+                ...state,
+                collaborators: {
+                    ...state.collaborators,
+                    [_collaborator._id]: _collaborator
+                },
+                relationC2C: [
+                    ...state.relationC2C,
+                    _relationC2C
+                ],
+                // reset popup
+                popupPage: null,
+                popupErrMsg: null,
+            }
+        } else {
+            return { ...state, popupErrMsg: action.message }
         }
     },
 

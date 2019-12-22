@@ -81,11 +81,13 @@ export const deleteCollection = (id, token='') => {
 
 export const addNewCollaborator = (name, email, collectionId, token='') => {
     return {
-        type: TYPES.ADD_NEW_COLLABORATOR, // API
+        type: TYPES.API_ADD_NEW_COLLABORATOR, // API
         token: token,
-        name: name,
-        email: email,
-        collectionId: collectionId,
+        body: {
+            name: name,
+            email: email,
+            collection_id: collectionId,
+        }
     }
 }
  
