@@ -328,15 +328,29 @@ const cases = {
      */
     ADD_RESTAURANT_TO_COLLECTION: (state, action) => {
 
-        console.log('@TODO Handle respones from backend');
+        console.log('@TODO Handle respones from backend', action);
 
-        return {
-            ...state,
-            relationC2R: [
-                ...state.relationC2R,
-                [action.collectionId, action.restaurantId]
-            ]
+        if (action.error) {
+            if (action.error.response.status === 401) { // maybe session expired
+                Cookies.remove('token');
+                return { ...state, sessions: {} }
+            } else {
+                return { ...state, popupErrMsg: action.error.message }
+            }
+        } else if (action.success) {
+            return {
+                ...state,
+                relationC2R: [
+                    ...state.relationC2R,
+                    [action.collectionId, action.restaurantId]
+                ],
+                toast: action.message
+            }
         }
+
+        //not handle fail case
+
+        return state;
     },
 
     REMOVE_RESTAURANT_FROM_COLLECTION: (state, action) => {

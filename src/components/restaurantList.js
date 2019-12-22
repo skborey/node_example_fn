@@ -27,7 +27,7 @@ class RestaurantList extends Component {
       if (collectionId === 'addNewCollection') {
         this.props.showPopup('addNewCollection');
       } else {
-        this.props.addRestaurantToCollection(restaurantId, collectionId);
+        this.props.addRestaurantToCollection(restaurantId, collectionId, this.props.sessions.token);
       }
   }
 

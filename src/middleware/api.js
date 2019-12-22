@@ -127,6 +127,33 @@ const apiMiddleware = (store) => (next) => (action) => {
             })
         })
       break;
+
+    case T.API_ADD_RESTAURANT_TO_COLLECTION:
+
+      next(action)
+      axios.post(API + "/collections/relation", action.body, { headers: { Authorization: action.token } } )
+        .then(res => { console.log('add restaurant to collection: ', res)
+            if (res.data.success) {
+                store.dispatch({
+                    type: T.ADD_RESTAURANT_TO_COLLECTION,
+                    success: res.data.success,
+                    message: res.data.message,
+                })
+            } else {
+                 store.dispatch({
+                    type: T.ADD_RESTAURANT_TO_COLLECTION,
+                    success: res.data.success,
+                    message: res.data.message,
+                })
+            }
+        })
+        .catch(err => {  console.log('delete collection: ', err)
+            store.dispatch({
+                type: T.ADD_RESTAURANT_TO_COLLECTION,
+                error: err
+            })
+        })
+      break;
     
     case T.API_ADD_NEW_COLLABORATOR:
 

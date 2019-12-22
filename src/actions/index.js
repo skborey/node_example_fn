@@ -111,11 +111,14 @@ export const deleteCollaborator = (id, token='') => {
 /**
     Restaurant
  */
-export const addRestaurantToCollection = (restaurantId, collectionId) => {
+export const addRestaurantToCollection = (restaurantId, collectionId, token='') => {
     return {
-        type: TYPES.ADD_RESTAURANT_TO_COLLECTION, // API
-        restaurantId: restaurantId,
-        collectionId: collectionId
+        type: TYPES.API_ADD_RESTAURANT_TO_COLLECTION, // API
+        token: token,
+        body: {
+            restaurant_id: restaurantId,
+            collection_id: collectionId
+        }
     }
 }
 
