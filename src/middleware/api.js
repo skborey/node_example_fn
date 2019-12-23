@@ -152,6 +152,8 @@ const apiMiddleware = (store) => (next) => (action) => {
                     type: T.ADD_RESTAURANT_TO_COLLECTION,
                     success: res.data.success,
                     message: res.data.message,
+                    restaurantId: action.body.restaurant_id,
+                    collectionId: action.body.collection_id,
                 })
             } else {
                  store.dispatch({
