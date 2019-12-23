@@ -291,7 +291,7 @@ const apiMiddleware = (store) => (next) => (action) => {
                   {
                     type: T.LOGIN,
                     success: false,
-                    message: "Something went wrong 1."
+                    message: "Something went wrong."
                   })
               }
             }).catch(err => { console.log(err);
@@ -306,7 +306,7 @@ const apiMiddleware = (store) => (next) => (action) => {
             {
               type: T.LOGIN,
               success: false,
-              message: "Something went wrong 2."
+              message: "Something went wrong."
             })
         }
       })
