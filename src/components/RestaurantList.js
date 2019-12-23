@@ -74,8 +74,8 @@ class RestaurantList extends Component {
             onClick={this.handleOnclick}
             >
               { isLogin 
-                && selectedCollectionId
-                  && (this.props.sessions.email === this.props.collections[selectedCollectionId].owner_email) ? 
+                && selectedCollectionId ?
+                  // && (this.props.sessions.email === this.props.collections[selectedCollectionId].owner_email) ? 
                   ( 
                   <div 
                     title="Remove from collection" 
