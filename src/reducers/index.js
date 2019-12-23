@@ -81,6 +81,8 @@ const cases = {
 
     INITIALIZE_SESSION: (state, action) => {
 
+        console.log('@TODO handle respone from backend', action);
+
         if (action.error) { console.error(action.error)
 
             return {
@@ -259,20 +261,19 @@ const cases = {
         }
 
         const id = action.id;
-        const isCollectionOwner = false; // @send change (state.sessions.email === state.collections[id].ownerEmail);
+        const isCollectionOwner = (state.sessions.email === state.collections[id].ownerEmail);
 
         // Remove collection from store and relation base on ownership 
         // (if not collection owner we just remove them from that collection only but not delete that collection)
         // @Second change: this done by backend frontend just remove for view
         const collections = state.collections;
-        const _collections = isCollectionOwner ?
-                        (Object.keys(collections)
+        const _collections = (Object.keys(collections)
                             .filter(key => key !== id) // exclude the removed collection
                                 .reduce((result, current) => {
                                     result[current] = collections[current];
                                     return result;
                                 }, {})
-                        ) : collections;
+                        );
 
         const _relationC2R = isCollectionOwner ? 
                         state.relationC2R.filter((pair) => pair[0] !== id)
