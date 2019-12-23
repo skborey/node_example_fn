@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
+
 import { showPopup, logout } from '../actions/';
 
 import '../assets/header.css';
