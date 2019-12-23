@@ -122,11 +122,14 @@ export const addRestaurantToCollection = (restaurantId, collectionId, token='') 
     }
 }
 
-export const removeRestaurantFromCollection = (restaurantId, collectionId) => {
+export const removeRestaurantFromCollection = (restaurantId, collectionId, token='') => {
     return {
-        type: TYPES.REMOVE_RESTAURANT_FROM_COLLECTION, // API
-        restaurantId: restaurantId,
-        collectionId: collectionId
+        type: TYPES.API_REMOVE_RESTAURANT_FROM_COLLECTION,
+        token: token,
+        body: {
+            restaurant_id: restaurantId,
+            collection_id: collectionId
+        }
     }
 }
 

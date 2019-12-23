@@ -49,14 +49,14 @@ class CollaboratorList extends Component {
             let id = pair[1]; // ["collection-id", "colaborator-id"]
             return (
                 <li key={index}>
-                    <input
-                        title="Rename collaborator"
-                        type="text"
-                        value={collaborators[id].name}
-                        onFocus={(e) => { this.setState({ oldName: e.target.value })}}
+                    <span>
+                        {/* title="Rename collaborator"
+                        type="text" */}
+                        {collaborators[id].name}
+                        {/* onFocus={(e) => { this.setState({ oldName: e.target.value })}}
                         onChange={this.handleOnChange}
-                        onBlur={this.renameCollaborator}
-                    />
+                        onBlur={this.renameCollaborator} */}
+                    </span>
                     <span 
                         title='Delete collection' 
                         onClick={() => this.deleteCollaborator(collaborators[id]._id, collaborators[id].name)}

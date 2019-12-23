@@ -17,32 +17,46 @@ const apiMiddleware = (store) => (next) => (action) => {
       axios.get(API + "/user", { headers: { Authorization: action.token } })
         .then(res => {
           let response = res.data;
-          let payload = {}
           if (response.success) {
-            payload = {
-              type: T.INITIALIZE_SESSION,
-              sessions: {
-                email: response.email,
-                token: action.token
+            // get the user assets for initial initializ the app
+            axios.get(API + "/user/assets", { headers: { Authorization: action.token } })
+            .then(r => { console.log(r)
+              if (r.data.success) {
+                store.dispatch(
+                {
+                  type: T.INITIALIZE_SESSION,
+                  success: true,
+                  sessions: {
+                    email: r.data.data.user.email,
+                    token: action.token,
+                  },
+                  state: r.data.data
+                })
+              } else {
+                store.dispatch(
+                {
+                  type: T.INITIALIZE_SESSION,
+                  success: false,
+                })
               }
-            }
-
-            // get the user assets for initial initializ the
-            
-
+            }).catch(err => { console.log(err);
+              store.dispatch(
+              {
+                type: T.INITIALIZE_SESSION,
+                error: err
+              })
+            });
           } else {
-            payload = {
+            store.dispatch({
               type: T.INITIALIZE_SESSION,
-              sessions: {},
-            }
+              success: false,
+            });
           }
-
-          store.dispatch(payload);
         })
         .catch(err => { //err.response.status=401
             store.dispatch({
                 type: T.INITIALIZE_SESSION,
-                sessions: {},
+                error: err,
             })
         })
 
@@ -103,7 +117,7 @@ const apiMiddleware = (store) => (next) => (action) => {
 
       next(action)
       axios.delete(API + "/collections/" + action.id, { headers: { Authorization: action.token } } )
-        .then(res => { console.log('delete collection: ', res)
+        .then(res => {
             if (res.data.success) {
                 store.dispatch({
                     type: T.DELETE_COLLECTION,
@@ -132,7 +146,7 @@ const apiMiddleware = (store) => (next) => (action) => {
 
       next(action)
       axios.post(API + "/collections/relation", action.body, { headers: { Authorization: action.token } } )
-        .then(res => { console.log('add restaurant to collection: ', res)
+        .then(res => {
             if (res.data.success) {
                 store.dispatch({
                     type: T.ADD_RESTAURANT_TO_COLLECTION,
@@ -154,7 +168,28 @@ const apiMiddleware = (store) => (next) => (action) => {
             })
         })
       break;
-    
+
+    case T.API_REMOVE_RESTAURANT_FROM_COLLECTION:
+
+      next(action)
+      axios.delete(API + "/collections/relation", { headers: { Authorization: action.token }, data: action.body })
+        .then(res => {
+          store.dispatch({
+              type: T.REMOVE_RESTAURANT_FROM_COLLECTION,
+              success: res.data.success,
+              restaurantId: action.body.restaurant_id,
+              collectionId: action.body.collection_id,
+              message: res.data.message,
+          })
+        })
+        .catch(err => {
+            store.dispatch({
+                type: T.REMOVE_RESTAURANT_FROM_COLLECTION,
+                error: err
+            })
+        })
+      break;
+
     case T.API_ADD_NEW_COLLABORATOR:
 
       next(action)
@@ -236,12 +271,45 @@ const apiMiddleware = (store) => (next) => (action) => {
       axios.post(API + "/login", { 
         email: action.email,
 	      password: action.password,
-      }).then(res => { store.dispatch(
-        {
-          type: T.LOGIN,
-          email: action.email,
-          response: res.data
-        })})
+      }).then(res => {
+        if (res.data.success) {
+            let token = res.data.token
+            // get the user assets for initial initializ the app
+            axios.get(API + "/user/assets", { headers: { Authorization: token } })
+            .then(res => { console.log(res)
+              if (res.data.success) {
+                store.dispatch(
+                {
+                  type: T.LOGIN,
+                  success: true,
+                  email: action.email,
+                  token: token,
+                  state: res.data.data
+                })
+              } else {
+                  store.dispatch(
+                  {
+                    type: T.LOGIN,
+                    success: false,
+                    message: "Something went wrong 1."
+                  })
+              }
+            }).catch(err => { console.log(err);
+              store.dispatch(
+              {
+                type: T.LOGIN,
+                error: err
+              })
+            });
+        } else {
+          store.dispatch(
+            {
+              type: T.LOGIN,
+              success: false,
+              message: "Something went wrong 2."
+            })
+        }
+      })
       .catch(err => { console.log(err); store.dispatch(
         {
           type: T.LOGIN,

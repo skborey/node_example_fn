@@ -81,13 +81,35 @@ const cases = {
 
     INITIALIZE_SESSION: (state, action) => {
 
-        const _sessions = (action.sessions.email 
-                            && action.sessions.token) ?
-                                 action.sessions : {};
+        if (action.error) { console.error(action.error)
 
-        return {
-            ...state,
-            sessions: _sessions
+            return {
+                ...state,
+                sessions: {},
+                popupErrMsg: "OOP! Something went wrong.",
+            }
+        } else if (action.success) {
+
+            const _sessions = (action.sessions.email 
+                                && action.sessions.token) ?
+                                    action.sessions : {};
+
+            return {
+                ...state,
+                sessions: _sessions,
+
+                collections: action.state.collections,
+                restaurants: action.state.restaurants,
+                collaborators: action.state.collaborators,
+                relationC2R: action.state.relationC2R,
+                relationC2C: action.state.relationC2C,
+            }
+        } else {
+            return {
+                ...state,
+                sessions: {},
+                popupErrMsg: null,
+            }
         }
     },
 
@@ -129,13 +151,20 @@ const cases = {
                 sessions: {},
                 popupErrMsg: "OOP! Something went wrong.",
             }
-        } else if (action.response.success) {
+        } else if (action.success) {
 
-            Cookies.set('token', action.response.token, { expires: 1 });
+            Cookies.set('token', action.token, { expires: 1 });
             
             return {
                 ...state,
-                sessions: { email: action.email, token: action.response.token },
+                sessions: { email: action.email, token: action.token },
+                
+                collections: action.state.collections,
+                restaurants: action.state.restaurants,
+                collaborators: action.state.collaborators,
+                relationC2R: action.state.relationC2R,
+                relationC2C: action.state.relationC2C,
+
                 popupErrMsg: null,
                 popupPage: null,
             }
@@ -144,7 +173,7 @@ const cases = {
             return {
                 ...state,
                 sessions: {},
-                popupErrMsg: action.response.message,
+                popupErrMsg: action.message,
             }
         }
     },
@@ -154,6 +183,8 @@ const cases = {
         if (action.response.success) {
                 
                 Cookies.remove('token');
+
+                initialState['restaurants'] = state.restaurants;
 
                 // return { ...state, sessions: {} }
                 return initialState;
@@ -228,10 +259,11 @@ const cases = {
         }
 
         const id = action.id;
-        const isCollectionOwner = (state.sessions.email === state.collections[id].ownerEmail);
+        const isCollectionOwner = false; // @send change (state.sessions.email === state.collections[id].ownerEmail);
 
         // Remove collection from store and relation base on ownership 
         // (if not collection owner we just remove them from that collection only but not delete that collection)
+        // @Second change: this done by backend frontend just remove for view
         const collections = state.collections;
         const _collections = isCollectionOwner ?
                         (Object.keys(collections)
@@ -389,15 +421,31 @@ const cases = {
 
     REMOVE_RESTAURANT_FROM_COLLECTION: (state, action) => {
 
-        console.log('@TODO Handle respones from backend');
+        console.log('@TODO Handle respones from backend', action);
 
-        const _relationC2R = state.relationC2R.filter(
-            (pair) => !(pair[0] === action.collectionId &&
-                            pair[1] === action.restaurantId));
+        if (action.error) {
+            if (action.error.response.status === 401) { // maybe session expired
+                Cookies.remove('token');
+                return { ...state, sessions: {} }
+            } else {
+                return { ...state, popupErrMsg: action.error.message }
+            }
+        } else if (action.success) {
 
-        return {
-            ...state,
-            relationC2R: _relationC2R
+            const _relationC2R = state.relationC2R.filter(
+                (pair) => !(pair[0] === action.collectionId &&
+                                pair[1] === action.restaurantId));
+
+            return {
+                ...state,
+                relationC2R: _relationC2R,
+                toast: action.message
+            }
+        } else {
+            return {
+                ...state,
+                toast: action.message
+            }
         }
     },
 
