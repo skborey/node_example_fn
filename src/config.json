@@ -1,6 +1,6 @@
 {
     "api": {
         "production": "https://isitopend-be.herokuapp.com/api/v1",
-        "development": "http://localhost:3001/api/v1"
+        "development": "https://isitopend-be.herokuapp.com/api/v1"
     }
 }
