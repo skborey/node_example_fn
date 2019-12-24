@@ -44,7 +44,7 @@ http://isitopen-app.herokuapp.com/
    
 3. Update config
   
-   > go to two file in `config` folder to change `api endpoint` configuration base on backend server (https://github.com/skborey/isitopen_backend)
+   > Go to `config.json` to change the backend endpoint
 
 4. Start server
 
@@ -54,4 +54,4 @@ http://isitopen-app.herokuapp.com/
 npm start
 ```
 
-Then vist the application via `http://localhost:3000/`
+Then vist the application via http://localhost:3000/
