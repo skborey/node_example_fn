@@ -54,4 +54,4 @@ http://isitopen-app.herokuapp.com/
 npm start
 ```
 
-The vist the application via `http://localhost:3000/`
+Then vist the application via `http://localhost:3000/`
